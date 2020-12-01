@@ -1,14 +1,13 @@
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +22,13 @@ import graphics.Sprite;
 
 
 public class Main extends Application  {
-    private static  int mapWidth = 20;
+    private static  int mapWidth = 31;
     private static int mapHeight = 13;
-    public static final int WIDTH = 20 * 48;
+    public static final int WIDTH = mapWidth * 48;
     public static final int HEIGHT = mapHeight * 48;
     private GraphicsContext gc;
     private Canvas canvas;
     private TileMap tileMap;
-
     private int FPS = 30;
     private int targetTime = 1000 / FPS;
 
@@ -38,10 +36,6 @@ public class Main extends Application  {
 
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
-
-    public Main() throws IOException {
-    }
-
 
     public static void main(String[] args) {
         launch(args);
@@ -60,7 +54,6 @@ public class Main extends Application  {
 
         // Tao scene
         Scene scene = new Scene(root);
-
         // Them scene vao stage
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -74,6 +67,7 @@ public class Main extends Application  {
         timer.start();
 
         tileMap = new TileMap(stillObjects);
+
 
     }
 

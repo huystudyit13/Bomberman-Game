@@ -3,21 +3,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
-import entities.Entity;
-import entities.Wall;
-import entities.Brick;
-import entities.Grass;
-import entities.Portal;
-import entities.Bomber;
+import entities.*;
 import graphics.Sprite;
 
 
 public class TileMap {
-    private int mapWidth = 20;
+    private int mapWidth = 31;
     private int mapHeight = 13;
 
     private int [][] map;
-    private String urlMap = "D:\\Code big project\\Dic1\\Bommerman\\src\\res\\levels\\level1.txt";
+    private String urlMap = "E:\\IdeaProjects\\bomberman-game\\src\\res\\levels\\level1.txt";
 
 
     public TileMap(List<Entity> stillObjects) throws IOException {
@@ -35,7 +30,6 @@ public class TileMap {
                 object = new Grass(col, row, Sprite.grass.getFxImage());
                 stillObjects.add(object);
 
-
                 switch (map[row][col]) {
                     case 0:
                         break;
@@ -52,7 +46,11 @@ public class TileMap {
                         object = new Bomber(col, row, Sprite.player_right.getFxImage());
                         break;
                     case 5 :
-
+                        object = new Balloon(col, row, Sprite.balloom_left1.getFxImage());
+                        break;
+                    case 6 :
+                        object = new Oneal(col, row, Sprite.oneal_left1.getFxImage());
+                        break;
                 }
 
                 stillObjects.add(object);
