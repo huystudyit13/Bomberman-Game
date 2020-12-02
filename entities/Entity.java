@@ -12,13 +12,9 @@ public abstract class Entity {
     //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int y;
 
-    protected boolean up = false;
-    protected boolean down = false;
-    protected boolean right = false;
-    protected boolean left = false;
-    protected int speed ;
-
     protected Image img;
+
+    protected Sprite _sprite;
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity( int xUnit, int yUnit, Image img) {
@@ -30,5 +26,6 @@ public abstract class Entity {
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
     }
+    
     public abstract void update();
 }
