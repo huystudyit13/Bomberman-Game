@@ -1,9 +1,9 @@
-package entities.Enemy;
+package oop.entities.Enemy;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import graphics.Sprite;
+import oop.graphics.Sprite;
 
 public class Balloon extends Enemy {
     public Balloon(int xUnit, int yUnit, Image img, double _speed) {

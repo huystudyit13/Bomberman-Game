@@ -1,4 +1,4 @@
-package entities;
+package oop.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

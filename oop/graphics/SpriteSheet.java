@@ -1,4 +1,4 @@
-package graphics;
+package oop.graphics;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -16,7 +16,7 @@ public class SpriteSheet {
     public int[] _pixels;
     public BufferedImage image;
 
-    public static SpriteSheet tiles = new SpriteSheet("/res/textures/classic.png", 256);
+    public static SpriteSheet tiles = new SpriteSheet("/oop/res/textures/classic.png", 256);
 
     public SpriteSheet(String path, int size) {
         _path = path;

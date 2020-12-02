@@ -1,10 +1,10 @@
-package entities;
+package oop.entities;
 
 import javafx.scene.image.Image;
 
-public class Brick extends Entity {
+public class Portal extends Entity {
 
-    public Brick(int xUnit, int yUnit, Image img) {
+    public Portal(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
 

@@ -1,11 +1,10 @@
-package entities;
+package oop.entities;
 
 import javafx.scene.image.Image;
 
-public class Balloon extends Entity {
+public class Brick extends Entity {
 
-
-    public Balloon(int xUnit, int yUnit, Image img) {
+    public Brick(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
 

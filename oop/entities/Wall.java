@@ -1,9 +1,10 @@
-package entities;
+package oop.entities;
 
 import javafx.scene.image.Image;
 
-public class Oneal extends Entity {
-    public Oneal(int xUnit, int yUnit, Image img) {
+public class Wall extends Entity {
+
+    public Wall(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
 

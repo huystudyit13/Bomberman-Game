@@ -1,4 +1,4 @@
-package entities.ai;
+package oop.entities.ai;
 
 public class AILow extends AI {
 

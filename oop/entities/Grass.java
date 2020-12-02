@@ -1,10 +1,10 @@
-package entities;
+package oop.entities;
 
 import javafx.scene.image.Image;
 
-public class Wall extends Entity {
+public class Grass extends Entity{
 
-    public Wall(int xUnit, int yUnit, Image img) {
+    public Grass(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
 

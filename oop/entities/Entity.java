@@ -1,9 +1,9 @@
-package entities;
+package oop.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import graphics.Sprite;
+import oop.graphics.Sprite;
 
 public abstract class Entity {
     //Tọa độ X tính từ góc trái trên trong Canvas
