@@ -1,5 +1,6 @@
 package oop.entities.Enemy;
 
+import javafx.scene.canvas.GraphicsContext;
 import oop.graphics.Sprite;
 import javafx.scene.image.Image;
 
@@ -21,6 +22,7 @@ public class Oneal extends Enemy {
                 break;
         }
     }
+
 
     @Override
     public void update() {

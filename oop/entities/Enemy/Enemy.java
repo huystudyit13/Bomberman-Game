@@ -6,13 +6,15 @@ import javafx.scene.image.Image;
 import oop.entities.ai.AI;
 import oop.entities.AnimatedEntity;
 import oop.graphics.Sprite;
+import oop.Main;
+
 public abstract class Enemy extends AnimatedEntity {
     protected double speed;
     protected final double MAX_STEPS;
     protected final double rest;
     protected double _steps;
+    protected boolean _alive = true;
     protected boolean _moving = false;
-    protected boolean alive = true;
 
     protected AI _ai;
 
@@ -30,12 +32,19 @@ public abstract class Enemy extends AnimatedEntity {
 
     @Override
     public void update() {
-        if(alive)
+
+        if(_alive) {
             chooseSprite();
+            img = _sprite.getFxImage();
+
+            animate();
+            calculateMove();
+        }
         else {
             _sprite = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, _animate, 20);
         }
     }
+
 
     public void calculateMove() {
         // TODO: Tính toán hướng đi và di chuyển Enemy theo _ai và cập nhật giá trị cho _direction
@@ -64,7 +73,7 @@ public abstract class Enemy extends AnimatedEntity {
     }
 
     public void move(double xa, double ya) {
-        if(!alive) return;
+        if(!_alive) return;
         y += ya;
         x += xa;
     }

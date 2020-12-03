@@ -16,7 +16,7 @@ public class TileMap {
     private int mapHeight = 13;
 
     private int [][] map;
-    private String urlMap = "E:\\IdeaProjects\\bomberman-game\\src\\oop\\res\\levels\\level1.txt";
+    private String urlMap = "D:\\Code big project\\Dic1\\Bommerman\\src\\oop\\res\\levels\\level1.txt";
 
 
     public TileMap(List<Entity> stillObjects) throws IOException {
@@ -50,10 +50,10 @@ public class TileMap {
                         //object = new Bomber(col, row, Sprite.player_right.getFxImage());
                         break;
                     case 5 :
-                        object = new Balloon(col, row, Sprite.balloom_left1.getFxImage(), 10);
+                        object = new Balloon(col, row, Sprite.balloom_left1.getFxImage(), 2);
                         break;
                     case 6 :
-                        object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(), 10);
+                        object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(), 2);
                         break;
                 }
 

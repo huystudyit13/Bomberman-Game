@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import oop.entities.*;
+import oop.entities.Enemy.Balloon;
+import oop.entities.Enemy.Oneal;
 import oop.graphics.Sprite;
 
 
@@ -57,10 +59,10 @@ public class Main extends Application  {
             }
         };
         timer.start();
+
         Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         tileMap = new TileMap(stillObjects);
-        entities.add(bomberman);
-
+        stillObjects.add(bomberman);
 
     }
 
@@ -70,6 +72,7 @@ public class Main extends Application  {
 
     public void update() {
         entities.forEach(Entity::update);
+        stillObjects.forEach(Entity::update);
     }
 
     public void render() {

@@ -4,14 +4,19 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import oop.graphics.Sprite;
+import oop.entities.ai.AILow;
 
 public class Balloon extends Enemy {
     public Balloon(int xUnit, int yUnit, Image img, double _speed) {
         super(xUnit, yUnit, img, _speed);
+
+        _sprite = Sprite.balloom_left1;
+        _ai = new AILow();
+        _direction = _ai.calculateDirection();
     }
 
     @Override
-    protected void chooseSprite() {
+    public void chooseSprite() {
         switch(_direction) {
             case 0:
             case 1:
@@ -24,9 +29,5 @@ public class Balloon extends Enemy {
         }
     }
 
-    @Override
-    public void update() {
-
-    }
 
 }
