@@ -7,10 +7,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import oop.Main;
 
-import static javafx.scene.input.KeyCode.*;
 
-
-public class Bomber extends Entity {
+public class Bomber extends Character {
     private boolean up = false;
     private boolean down = false;
     private boolean right = false;
@@ -30,14 +28,19 @@ public class Bomber extends Entity {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if(event.getCode() == UP) System.out.println("!");
+                switch (event.getCode()) {
+                    case UP: W: up = true; break;
+                    case DOWN: S: down = true; break;
+                    case RIGHT: D:right = true; break;
+                    case LEFT: A: left = true; break;
+                }
             }
         });
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
-                    case UP: W: up = false; System.out.println("2"); break;
+                    case UP: W: up = false; break;
                     case DOWN: S: down = false; break;
                     case RIGHT: D:right = false; break;
                     case LEFT: A: left = false; break;

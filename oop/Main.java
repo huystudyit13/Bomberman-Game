@@ -57,7 +57,9 @@ public class Main extends Application  {
             }
         };
         timer.start();
+        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         tileMap = new TileMap(stillObjects);
+        entities.add(bomberman);
 
 
     }

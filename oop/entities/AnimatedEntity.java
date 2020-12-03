@@ -1,6 +1,5 @@
 package oop.entities;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public abstract class AnimatedEntity extends Entity {
@@ -11,8 +10,6 @@ public abstract class AnimatedEntity extends Entity {
         super(xUnit, yUnit, img);
 
     }
-
-    //public abstract void render(GraphicsContext gc);
 
     protected void animate() {
         if(_animate < MAX_ANIMATE) _animate++; else _animate = 0;

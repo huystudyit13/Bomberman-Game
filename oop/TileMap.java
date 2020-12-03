@@ -47,7 +47,7 @@ public class TileMap {
                         object = new Portal(col, row, Sprite.portal.getFxImage());
                         break;
                     case 4 :
-                        object = new Bomber(col, row, Sprite.player_right.getFxImage());
+                        //object = new Bomber(col, row, Sprite.player_right.getFxImage());
                         break;
                     case 5 :
                         object = new Balloon(col, row, Sprite.balloom_left1.getFxImage(), 10);
