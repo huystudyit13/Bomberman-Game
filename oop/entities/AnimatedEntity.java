@@ -8,7 +8,6 @@ public abstract class AnimatedEntity extends Entity {
 
     public AnimatedEntity(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
-
     }
 
     protected void animate() {

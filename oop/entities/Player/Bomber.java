@@ -1,4 +1,4 @@
-package oop.entities;
+package oop.entities.Player;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -6,6 +6,9 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 
 import oop.Main;
+import oop.entities.Enemy.Balloon;
+import oop.entities.Blocks.*;
+import oop.entities.Entity;
 import oop.graphics.Sprite;
 
 public class Bomber extends Character {
@@ -42,6 +45,12 @@ public class Bomber extends Character {
             img = _sprite.getFxImage();
         }
 
+    }
+
+    @Override
+    public boolean collide(Entity e) {
+        if( e instanceof Blocks) return false;
+        return true;
     }
 
     private void keyboard(Scene scene) {
@@ -93,6 +102,11 @@ public class Bomber extends Character {
             double xt = ((x + x) + c % 2 * 9) / 16; //divide with tiles size to pass to tile coordinate
             double yt = ((y + y) + c / 2 * 10 - 13) / 16; //these values are the best from multiple tests
 
+            Entity a = new Balloon(14,1, Sprite.doll_left1.getFxImage(),2);
+            if( a instanceof Wall) {
+                System.out.println("gap tuong");
+                return false;
+            }
         }
 
         return true;

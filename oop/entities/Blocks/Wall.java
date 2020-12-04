@@ -1,11 +1,11 @@
-package oop.entities;
+package oop.entities.Blocks;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Portal extends Entity {
+public class Wall extends Blocks {
 
-    public Portal(int xUnit, int yUnit, Image img) {
+    public Wall(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
 

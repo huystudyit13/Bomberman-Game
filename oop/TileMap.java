@@ -1,14 +1,16 @@
 package oop;
+
+import oop.entities.Entity;
+import oop.entities.Grass;
+import oop.entities.Blocks.Wall;
+import oop.entities.Blocks.Brick;
+import oop.entities.Blocks.Portal;
+import oop.graphics.Sprite;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
-
-
-import oop.entities.*;
-import oop.entities.Enemy.Balloon;
-import oop.entities.Enemy.Oneal;
-import oop.graphics.Sprite;
 
 
 public class TileMap {
@@ -50,16 +52,18 @@ public class TileMap {
                         //object = new Bomber(col, row, Sprite.player_right.getFxImage());
                         break;
                     case 5 :
-                        object = new Balloon(col, row, Sprite.balloom_left1.getFxImage(), 2);
+                        //object = new Balloon(col, row, Sprite.balloom_left1.getFxImage(), 2);
                         break;
                     case 6 :
-                        object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(), 2);
+                        //object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(), 2);
                         break;
                 }
 
                 stillObjects.add(object);
             }
         }
+
+
     }
 
 }

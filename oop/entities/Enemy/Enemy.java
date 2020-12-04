@@ -3,6 +3,7 @@ package oop.entities.Enemy;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import oop.entities.Entity;
 import oop.entities.ai.AI;
 import oop.entities.AnimatedEntity;
 import oop.graphics.Sprite;
@@ -93,6 +94,11 @@ public abstract class Enemy extends AnimatedEntity {
 
         //Entity a = _board.getEntity(xx, yy, this); //entity of the position we want to go
 
+        return true;
+    }
+
+    @Override
+    public boolean collide(Entity e) {
         return true;
     }
 

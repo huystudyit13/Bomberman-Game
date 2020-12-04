@@ -1,13 +1,14 @@
-package oop.entities;
+package oop.entities.Blocks;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Brick extends Entity {
+public class Portal extends Blocks {
 
-    public Brick(int xUnit, int yUnit, Image img) {
+    public Portal(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
+
 
 
     @Override

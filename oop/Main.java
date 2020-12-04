@@ -13,6 +13,7 @@ import java.util.List;
 import oop.entities.*;
 import oop.entities.Enemy.Balloon;
 import oop.entities.Enemy.Oneal;
+import oop.entities.Player.Bomber;
 import oop.graphics.Sprite;
 
 
@@ -60,9 +61,15 @@ public class Main extends Application  {
         };
         timer.start();
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
         tileMap = new TileMap(stillObjects);
+
+        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        Entity balloon = new Balloon(14,1, Sprite.doll_left1.getFxImage(),2);
+        Entity oneal = new Oneal(16,1, Sprite.oneal_left1.getFxImage(), 2);
+
         stillObjects.add(bomberman);
+        stillObjects.add(balloon);
+        stillObjects.add(oneal);
 
     }
 
@@ -70,6 +77,10 @@ public class Main extends Application  {
         return scene;
     }
 
+    public static Entity getEntityAt(int x, int y) {
+        Entity res = null;
+        return res;
+    }
     public void update() {
         entities.forEach(Entity::update);
         stillObjects.forEach(Entity::update);
