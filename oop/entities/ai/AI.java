@@ -1,5 +1,8 @@
 package oop.entities.ai;
 
+import oop.entities.Entity;
+import oop.graphics.Sprite;
+
 import java.util.Random;
 
 public abstract class AI {
@@ -12,3 +15,7 @@ public abstract class AI {
 	 */
 	public abstract int calculateDirection();
 }
+
+
+
+//

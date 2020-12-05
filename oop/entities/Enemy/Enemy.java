@@ -3,11 +3,12 @@ package oop.entities.Enemy;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import oop.entities.Entity;
+import oop.entities.*;
 import oop.entities.ai.AI;
-import oop.entities.AnimatedEntity;
 import oop.graphics.Sprite;
 import oop.Main;
+
+import java.util.Random;
 
 public abstract class Enemy extends AnimatedEntity {
     protected double speed;
@@ -36,7 +37,7 @@ public abstract class Enemy extends AnimatedEntity {
 
         if(_alive) {
             chooseSprite();
-            img = _sprite.getFxImage();
+            //img = _sprite.getFxImage();
 
             animate();
             calculateMove();
@@ -53,8 +54,9 @@ public abstract class Enemy extends AnimatedEntity {
         // TODO: sử dụng move() để di chuyển
         // TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
         int xa = 0, ya = 0;
+        Random rd = new Random();
         if(_steps <= 0){
-            _direction = _ai.calculateDirection();
+            _direction = rd.nextInt(4);
             _steps = MAX_STEPS;
         }
 
@@ -79,28 +81,28 @@ public abstract class Enemy extends AnimatedEntity {
         x += xa;
     }
 
-    public boolean canMove(double x, double y) {
-        double xr = x, yr = y - 16; //subtract y to get more accurate results
-
-        //the thing is, subract 15 to 16 (sprite size), so if we add 1 tile we get the next pixel tile with this
-        //we avoid the shaking inside tiles with the help of steps
-        if(_direction == 0) { yr += _sprite.getSize() -1 ; xr += _sprite.getSize()/2; }
-        if(_direction == 1) {yr += _sprite.getSize()/2; xr += 1;}
-        if(_direction == 2) { xr += _sprite.getSize()/2; yr += 1;}
-        if(_direction == 3) { xr += _sprite.getSize() -1; yr += _sprite.getSize()/2;}
-
-        int xx = (int) ((xr / 16) + (int)x);
-        int yy = (int) ((yr / 16) +(int)y);
-
-        //Entity a = _board.getEntity(xx, yy, this); //entity of the position we want to go
-
-        return true;
-    }
+    	public boolean canMove(double x, double y) {
+        for (Entity e : Main.entities) {
+            if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) return false;
+        }
+        for(Entity e : Main.stillObjects) {
+            if(e instanceof Grass) return true;
+        }
+		return true;
+	}
 
     @Override
-    public boolean collide(Entity e) {
-        return true;
-    }
+    public boolean collide(Entity e, double a , double b) {
+		double leftA = x + a;   double leftB = e.getX();
+		double rightA = x + Sprite.SCALED_SIZE + a; double rightB = e.getX() + Sprite.SCALED_SIZE;
+		double topA = y + b;     double topB = e.getY();
+		double bottomA = y + Sprite.SCALED_SIZE + b;  double bottomB = e.getY() + Sprite.SCALED_SIZE;
+		if (( bottomA > topB ) && ( topA < bottomB ) && ( rightA > leftB ) && ( leftA < rightB )  )
+		{
+			return true;
+		}
+		return false;
+	}
 
     protected abstract void chooseSprite();
 }

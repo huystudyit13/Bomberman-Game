@@ -27,7 +27,15 @@ public abstract class Entity {
         gc.drawImage(img, x, y);
     }
 
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
     public abstract void update();
 
-    public abstract boolean collide(Entity e);
+    public abstract boolean collide(Entity e, double a , double b);
 }

@@ -1,10 +1,13 @@
 package oop;
 
+import oop.entities.Enemy.Balloon;
+import oop.entities.Enemy.Oneal;
 import oop.entities.Entity;
 import oop.entities.Grass;
-import oop.entities.Blocks.Wall;
-import oop.entities.Blocks.Brick;
-import oop.entities.Blocks.Portal;
+import oop.entities.Player.Bomber;
+import oop.entities.Wall;
+import oop.entities.Brick;
+import oop.entities.Portal;
 import oop.graphics.Sprite;
 
 import java.io.BufferedReader;
@@ -18,10 +21,10 @@ public class TileMap {
     private int mapHeight = 13;
 
     private int [][] map;
-    private String urlMap = "D:\\Code big project\\Dic1\\Bommerman\\src\\oop\\res\\levels\\level1.txt";
+    private String urlMap = "E:\\IdeaProjects\\bomberman-game\\src\\oop\\res\\levels\\level1.txt";
 
 
-    public TileMap(List<Entity> stillObjects) throws IOException {
+    public TileMap(List<Entity> stillObjects, List<Entity> entities) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(urlMap));
         map = new int [mapHeight][mapWidth];
 
@@ -41,25 +44,30 @@ public class TileMap {
                         break;
                     case 1 :
                         object = new Wall(col, row, Sprite.wall.getFxImage());
+                        entities.add(object);
                         break;
                     case 2 :
                         object = new Brick(col, row, Sprite.brick.getFxImage());
+                        entities.add(object);
                         break;
                     case 3 :
                         object = new Portal(col, row, Sprite.portal.getFxImage());
+                        entities.add(object);
                         break;
                     case 4 :
-                        //object = new Bomber(col, row, Sprite.player_right.getFxImage());
+                        object = new Bomber(col, row, Sprite.player_right.getFxImage());
+                        entities.add(object);
                         break;
                     case 5 :
-                        //object = new Balloon(col, row, Sprite.balloom_left1.getFxImage(), 2);
+                        object = new Balloon(col, row, Sprite.balloom_left1.getFxImage(), 2);
+                        entities.add(object);
                         break;
                     case 6 :
-                        //object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(), 2);
+                        object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(), 2);
+                        entities.add(object);
                         break;
                 }
 
-                stillObjects.add(object);
             }
         }
 

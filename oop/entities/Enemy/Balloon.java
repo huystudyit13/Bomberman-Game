@@ -3,6 +3,7 @@ package oop.entities.Enemy;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import oop.entities.Entity;
 import oop.graphics.Sprite;
 import oop.entities.ai.AILow;
 
@@ -28,6 +29,5 @@ public class Balloon extends Enemy {
                 break;
         }
     }
-
 
 }

@@ -3,12 +3,15 @@ package oop.entities.Player;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import oop.Main;
+import oop.entities.Brick;
 import oop.entities.Enemy.Balloon;
-import oop.entities.Blocks.*;
 import oop.entities.Entity;
+import oop.entities.Grass;
+import oop.entities.Wall;
 import oop.graphics.Sprite;
 
 public class Bomber extends Character {
@@ -35,6 +38,7 @@ public class Bomber extends Character {
             animate();
 
             calculateMove();
+
         }
         else {
             while (temp > 1) {
@@ -48,9 +52,16 @@ public class Bomber extends Character {
     }
 
     @Override
-    public boolean collide(Entity e) {
-        if( e instanceof Blocks) return false;
-        return true;
+    public boolean collide(Entity e, double a , double b) {
+        double leftA = x + a;   double leftB = e.getX();
+        double rightA = x + Sprite.SCALED_SIZE - 10 + a; double rightB = e.getX() + Sprite.SCALED_SIZE;
+        double topA = y + b;     double topB = e.getY();
+        double bottomA = y + Sprite.SCALED_SIZE + b;  double bottomB = e.getY() + Sprite.SCALED_SIZE;
+        if (( bottomA > topB ) && ( topA < bottomB ) && ( rightA > leftB ) && ( leftA < rightB )  )
+            {
+                return true;
+            }
+        return false;
     }
 
     private void keyboard(Scene scene) {
@@ -58,10 +69,14 @@ public class Bomber extends Character {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
-                    case UP: W: up = true; break;
-                    case DOWN: S: down = true; break;
-                    case RIGHT: D:right = true; break;
-                    case LEFT: A: left = true; break;
+                    case UP: up = true; break;
+                    case DOWN: down = true; break;
+                    case RIGHT: right = true; break;
+                    case LEFT: left = true; break;
+                    case W: up = true; break;
+                    case A: left = true; break;
+                    case S: down = true; break;
+                    case D: right = true; break;
                 }
             }
         });
@@ -69,13 +84,18 @@ public class Bomber extends Character {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
-                    case UP: W: up = false; break;
-                    case DOWN: S: down = false; break;
-                    case RIGHT: D:right = false; break;
-                    case LEFT: A: left = false; break;
+                    case UP: up = false; break;
+                    case DOWN: down = false; break;
+                    case RIGHT: right = false; break;
+                    case LEFT: left = false; break;
+                    case W: up = false; break;
+                    case A: left = false; break;
+                    case S: down = false; break;
+                    case D: right = false; break;
                 }
             }
         });
+
 
     }
 
@@ -97,20 +117,14 @@ public class Bomber extends Character {
     }
 
     public boolean canMove(double x, double y) {
-        // TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-        for (int c = 0; c < 4; c++) { //colision detection for each corner of the player
-            double xt = ((x + x) + c % 2 * 9) / 16; //divide with tiles size to pass to tile coordinate
-            double yt = ((y + y) + c / 2 * 10 - 13) / 16; //these values are the best from multiple tests
-
-            Entity a = new Balloon(14,1, Sprite.doll_left1.getFxImage(),2);
-            if( a instanceof Wall) {
-                System.out.println("gap tuong");
-                return false;
-            }
+        for (Entity e : Main.entities) {
+            if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) return false;
         }
-
+        for(Entity e : Main.stillObjects) {
+            if(e instanceof Grass) return true;
+        }
         return true;
-        //return false;
+
     }
 
     public void move(double xa, double ya) {
@@ -128,6 +142,7 @@ public class Bomber extends Character {
         if(canMove(xa, 0)) {
             x += xa;
         }
+
     }
 
     private void chooseSprite() {

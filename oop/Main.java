@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import oop.entities.*;
@@ -18,8 +19,8 @@ import oop.graphics.Sprite;
 
 
 public class Main extends Application  {
-    private static  int mapWidth = 31;
-    private static int mapHeight = 13;
+    private static final int mapWidth = 31;
+    private static final int mapHeight = 13;
     public static final int WIDTH = mapWidth * 48;
     public static final int HEIGHT = mapHeight * 48;
     private GraphicsContext gc;
@@ -29,8 +30,8 @@ public class Main extends Application  {
     private int targetTime = 1000 / FPS;
     private static Scene scene;
 
-    private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+    public static List<Entity> entities = new ArrayList<>();
+    public static List<Entity> stillObjects = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -61,15 +62,8 @@ public class Main extends Application  {
         };
         timer.start();
 
-        tileMap = new TileMap(stillObjects);
+        tileMap = new TileMap(stillObjects, entities);
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        Entity balloon = new Balloon(14,1, Sprite.doll_left1.getFxImage(),2);
-        Entity oneal = new Oneal(16,1, Sprite.oneal_left1.getFxImage(), 2);
-
-        stillObjects.add(bomberman);
-        stillObjects.add(balloon);
-        stillObjects.add(oneal);
 
     }
 
@@ -77,18 +71,16 @@ public class Main extends Application  {
         return scene;
     }
 
-    public static Entity getEntityAt(int x, int y) {
-        Entity res = null;
-        return res;
-    }
     public void update() {
         entities.forEach(Entity::update);
         stillObjects.forEach(Entity::update);
+
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+
     }
 }
