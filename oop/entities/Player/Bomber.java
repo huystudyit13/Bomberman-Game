@@ -2,11 +2,13 @@ package oop.entities.Player;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import oop.Main;
+import oop.entities.Bomb.Bomb;
 import oop.entities.Brick;
 import oop.entities.Enemy.Balloon;
 import oop.entities.Entity;
@@ -19,7 +21,8 @@ public class Bomber extends Character {
     private boolean down = false;
     private boolean right = false;
     private boolean left = false;
-    private int temp =1;
+    private boolean placeBomb = false;
+    private int temp = 1;
 
 
     public Bomber(int xUnit, int yUnit, Image img) {
@@ -32,12 +35,19 @@ public class Bomber extends Character {
         keyboard(Main.getScene());
 
         if (_alive) {
+            calculateMove();
+            placeBomb(x,y);
+        }
+
+    }
+
+    @Override
+    public void render(GraphicsContext gc) {
+        if (_alive) {
             chooseSprite();
             img = _sprite.getFxImage();
 
             animate();
-
-            calculateMove();
 
         }
         else {
@@ -49,14 +59,15 @@ public class Bomber extends Character {
             img = _sprite.getFxImage();
         }
 
+        gc.drawImage(img,x,y);
     }
 
     @Override
     public boolean collide(Entity e, double a , double b) {
-        double leftA = x + a;   double leftB = e.getX();
+        double leftA = x + a; double leftB = e.getX();
         double rightA = x + Sprite.SCALED_SIZE - 10 + a; double rightB = e.getX() + Sprite.SCALED_SIZE;
-        double topA = y + b;     double topB = e.getY();
-        double bottomA = y + Sprite.SCALED_SIZE + b;  double bottomB = e.getY() + Sprite.SCALED_SIZE;
+        double topA = y + b ;     double topB = e.getY();
+        double bottomA = y + Sprite.SCALED_SIZE + b - 10;  double bottomB = e.getY() + Sprite.SCALED_SIZE;
         if (( bottomA > topB ) && ( topA < bottomB ) && ( rightA > leftB ) && ( leftA < rightB )  )
             {
                 return true;
@@ -77,6 +88,8 @@ public class Bomber extends Character {
                     case A: left = true; break;
                     case S: down = true; break;
                     case D: right = true; break;
+
+                    case SPACE: placeBomb = true; break;
                 }
             }
         });
@@ -92,10 +105,11 @@ public class Bomber extends Character {
                     case A: left = false; break;
                     case S: down = false; break;
                     case D: right = false; break;
+
+                    case SPACE: placeBomb = false; break;
                 }
             }
         });
-
 
     }
 
@@ -134,7 +148,6 @@ public class Bomber extends Character {
         if(xa < 0) _direction = 3;
         if(ya > 0) _direction = 2;
         if(ya < 0) _direction = 0;
-
         if(canMove(0, ya)) { //separate the moves for the player can slide when is colliding
             y += ya;
         }
@@ -143,6 +156,15 @@ public class Bomber extends Character {
             x += xa;
         }
 
+    }
+
+    public void placeBomb(int x, int y) {
+        if (placeBomb) {
+            Entity e = new Bomb(x/48,y/48, Sprite.bomb.getFxImage());
+            //Entity e = new Bomb((x+16)/32,(y+16)/32, Sprite.bomb.getFxImage());
+            Main.bomb.add(e);
+        }
+        placeBomb = false;
     }
 
     private void chooseSprite() {

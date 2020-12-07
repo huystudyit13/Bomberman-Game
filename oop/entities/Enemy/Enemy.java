@@ -27,26 +27,33 @@ public abstract class Enemy extends AnimatedEntity {
 
         speed = _speed;
 
-        MAX_STEPS = 16 / speed;
+        MAX_STEPS = 180;
         rest = (MAX_STEPS - (int) MAX_STEPS) / MAX_STEPS;
         _steps = MAX_STEPS;
     }
 
     @Override
     public void update() {
+        if(_alive) {
+            calculateMove();
+        }
 
+    }
+
+    @Override
+    public void render(GraphicsContext gc) {
         if(_alive) {
             chooseSprite();
             //img = _sprite.getFxImage();
 
             animate();
-            calculateMove();
         }
         else {
             _sprite = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, _animate, 20);
         }
-    }
 
+        gc.drawImage(img,x,y);
+    }
 
     public void calculateMove() {
         // TODO: Tính toán hướng đi và di chuyển Enemy theo _ai và cập nhật giá trị cho _direction

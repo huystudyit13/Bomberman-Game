@@ -32,6 +32,8 @@ public class Main extends Application  {
 
     public static List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
+    public static List<Entity> bomb = new ArrayList<>();
+    public static List<Entity> flame = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -74,6 +76,28 @@ public class Main extends Application  {
     public void update() {
         entities.forEach(Entity::update);
         stillObjects.forEach(Entity::update);
+        bomb.forEach(Entity::update);
+        flame.forEach(Entity::update);
+
+        for (int i = 0; i < entities.size(); i++) {
+            Entity a = entities.get(i);
+            if(a.isRemoved()) entities.remove(i);
+        }
+
+        for (int i = 0; i < stillObjects.size(); i++) {
+            Entity a = stillObjects.get(i);
+            if(a.isRemoved()) stillObjects.remove(i);
+        }
+
+        for (int i = 0; i < bomb.size(); i++) {
+            Entity a = bomb.get(i);
+            if(a.isRemoved()) bomb.remove(i);
+        }
+
+        for (int i = 0; i < flame.size(); i++) {
+            Entity a = flame.get(i);
+            if(a.isRemoved()) flame.remove(i);
+        }
 
     }
 
@@ -81,6 +105,7 @@ public class Main extends Application  {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
-
+        bomb.forEach(g -> g.render(gc));
+        flame.forEach(g -> g.render(gc));
     }
 }

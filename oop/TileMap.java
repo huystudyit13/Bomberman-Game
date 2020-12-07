@@ -1,13 +1,10 @@
 package oop;
 
+import oop.entities.*;
+import oop.entities.Bomb.Bomb;
 import oop.entities.Enemy.Balloon;
 import oop.entities.Enemy.Oneal;
-import oop.entities.Entity;
-import oop.entities.Grass;
 import oop.entities.Player.Bomber;
-import oop.entities.Wall;
-import oop.entities.Brick;
-import oop.entities.Portal;
 import oop.graphics.Sprite;
 
 import java.io.BufferedReader;
@@ -21,7 +18,7 @@ public class TileMap {
     private int mapHeight = 13;
 
     private int [][] map;
-    private String urlMap = "E:\\IdeaProjects\\bomberman-game\\src\\oop\\res\\levels\\level1.txt";
+    private String urlMap = "D:\\Code big project\\Dic1\\Bommerman\\src\\oop\\res\\levels\\level1.txt";
 
 
     public TileMap(List<Entity> stillObjects, List<Entity> entities) throws IOException {
@@ -59,11 +56,15 @@ public class TileMap {
                         entities.add(object);
                         break;
                     case 5 :
-                        object = new Balloon(col, row, Sprite.balloom_left1.getFxImage(), 2);
+                        object = new Balloon(col, row, Sprite.balloom_left1.getFxImage(), 1);
                         entities.add(object);
                         break;
                     case 6 :
-                        object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(), 2);
+                        object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(), 1);
+                        entities.add(object);
+                        break;
+                    case 7 :
+                        object = new Bomb(col, row, Sprite.balloom_left1.getFxImage());
                         entities.add(object);
                         break;
                 }

@@ -16,6 +16,11 @@ public class Grass extends Entity {
     }
 
     @Override
+    public void render(GraphicsContext gc) {
+        gc.drawImage(img,x,y);
+    }
+
+    @Override
     public boolean collide(Entity e, double a , double b) {
         return false;
     }

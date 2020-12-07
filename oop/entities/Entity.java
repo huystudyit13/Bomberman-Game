@@ -16,6 +16,8 @@ public abstract class Entity {
 
     protected Sprite _sprite;
 
+    protected boolean _removed = false;
+
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity( int xUnit, int yUnit, Image img) {
         this.x = xUnit * Sprite.SCALED_SIZE;
@@ -23,8 +25,7 @@ public abstract class Entity {
         this.img = img;
     }
 
-    public void render(GraphicsContext gc) {
-        gc.drawImage(img, x, y);
+    protected Entity() {
     }
 
     public int getY() {
@@ -35,7 +36,17 @@ public abstract class Entity {
         return x;
     }
 
+    public boolean isRemoved() {
+        return _removed;
+    }
+
+    public void remove() {
+        _removed = true;
+    }
+
     public abstract void update();
+
+    public abstract void render(GraphicsContext gc);
 
     public abstract boolean collide(Entity e, double a , double b);
 }

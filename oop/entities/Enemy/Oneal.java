@@ -16,10 +16,12 @@ public class Oneal extends Enemy {
             case 0:
             case 1:
                 _sprite = Sprite.movingSprite(Sprite.oneal_right1, Sprite.oneal_right2, Sprite.oneal_right3, _animate, 60);
+                img = _sprite.getFxImage();
                 break;
             case 2:
             case 3:
                 _sprite = Sprite.movingSprite(Sprite.oneal_left1, Sprite.oneal_left2, Sprite.oneal_left3, _animate, 60);
+                img = _sprite.getFxImage();
                 break;
         }
     }
