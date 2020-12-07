@@ -4,6 +4,9 @@ import oop.entities.*;
 import oop.entities.Bomb.Bomb;
 import oop.entities.Enemy.Balloon;
 import oop.entities.Enemy.Oneal;
+import oop.entities.Item.BombPoweredUp;
+import oop.entities.Item.FlamePoweredUp;
+import oop.entities.Item.SpeedPoweredUp;
 import oop.entities.Player.Bomber;
 import oop.graphics.Sprite;
 
@@ -21,7 +24,7 @@ public class TileMap {
     private String urlMap = "D:\\Code big project\\Dic1\\Bommerman\\src\\oop\\res\\levels\\level1.txt";
 
 
-    public TileMap(List<Entity> stillObjects, List<Entity> entities) throws IOException {
+    public TileMap(List<Entity> stillObjects, List<Entity> entities, List<Entity> item) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(urlMap));
         map = new int [mapHeight][mapWidth];
 
@@ -63,9 +66,13 @@ public class TileMap {
                         object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(), 1);
                         entities.add(object);
                         break;
+                    case 8 :
+                        object = new BombPoweredUp(col, row, Sprite.powerup_bombs.getFxImage());
+                        item.add(object);
+                        break;
                     case 7 :
-                        object = new Bomb(col, row, Sprite.balloom_left1.getFxImage());
-                        entities.add(object);
+                        object = new SpeedPoweredUp(col, row, Sprite.powerup_speed.getFxImage());
+                        item.add(object);
                         break;
                 }
 

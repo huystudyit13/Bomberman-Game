@@ -13,6 +13,10 @@ import oop.entities.Brick;
 import oop.entities.Enemy.Balloon;
 import oop.entities.Entity;
 import oop.entities.Grass;
+import oop.entities.Item.BombPoweredUp;
+import oop.entities.Item.FlamePoweredUp;
+import oop.entities.Item.Item;
+import oop.entities.Item.SpeedPoweredUp;
 import oop.entities.Wall;
 import oop.graphics.Sprite;
 
@@ -24,6 +28,7 @@ public class Bomber extends Character {
     private boolean placeBomb = false;
     private int temp = 1;
 
+    protected BombPoweredUp bombitem;
 
     public Bomber(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -32,6 +37,7 @@ public class Bomber extends Character {
 
     @Override
     public void update() {
+        System.out.println("bombnumber : " + Main.BOMBNUM + "\tspeed : " + Main.SPEEDNUM + "\tflame : " + Main.FLAMENUM);
         keyboard(Main.getScene());
 
         if (_alive) {
@@ -51,10 +57,7 @@ public class Bomber extends Character {
 
         }
         else {
-            while (temp > 1) {
-                _sprite = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, _animate, 20);
-                temp -=1;
-            }
+            _sprite = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, _animate, 20);
             animate();
             img = _sprite.getFxImage();
         }
@@ -123,7 +126,7 @@ public class Bomber extends Character {
         if(right) xa++;
 
         if(xa != 0 || ya != 0)  {
-            move(xa * 2, ya * 2);
+            move(xa * Main.SPEEDNUM, ya * Main.SPEEDNUM);
             _moving = true;
         } else {
             _moving = false;
@@ -132,13 +135,37 @@ public class Bomber extends Character {
 
     public boolean canMove(double x, double y) {
         for (Entity e : Main.entities) {
-            if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) return false;
+            if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) {
+                return false;
+            }
+            if((e instanceof Balloon) && collide(e,x,y)) {
+                _alive = false;
+                return true;
+            }
+        }
+        for(Entity e : Main.item) {
+            if((e instanceof SpeedPoweredUp) && collide(e,x,y)) {
+                SpeedPoweredUp._active = true;
+                Main.SPEEDNUM += 0.5;
+                return true;
+            }
+            else if ((e instanceof BombPoweredUp) && collide(e,x,y)) {
+                BombPoweredUp._active = true;
+                Main.BOMBNUM++;
+                return true;
+            }
+            else if((e instanceof FlamePoweredUp) && collide(e,x,y)) {
+                FlamePoweredUp._active = true;
+                Main.FLAMENUM++;
+                return true;
+            }
+
         }
         for(Entity e : Main.stillObjects) {
             if(e instanceof Grass) return true;
         }
-        return true;
 
+        return true;
     }
 
     public void move(double xa, double ya) {
@@ -159,12 +186,14 @@ public class Bomber extends Character {
     }
 
     public void placeBomb(int x, int y) {
-        if (placeBomb) {
-            Entity e = new Bomb(x/48,y/48, Sprite.bomb.getFxImage());
-            //Entity e = new Bomb((x+16)/32,(y+16)/32, Sprite.bomb.getFxImage());
-            Main.bomb.add(e);
+        if (Main.BOMBNUM > 0) {
+            if (placeBomb) {
+                Entity e = new Bomb(x/48,y/48, Sprite.bomb.getFxImage());
+                Main.bomb.add(e);
+                Bomb.decreaseBombNumber();
+                placeBomb = false;
+            }
         }
-        placeBomb = false;
     }
 
     private void chooseSprite() {

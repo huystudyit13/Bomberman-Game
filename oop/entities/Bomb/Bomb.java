@@ -10,7 +10,7 @@ import oop.entities.Entity;
 import oop.graphics.Sprite;
 
 public class Bomb extends AnimatedEntity {
-    public double _timeToExplode = 1;
+    public double _timeToExplode = 120;
     public int _timeAfter = 40;
 
     public boolean _exploded = false;
@@ -31,8 +31,10 @@ public class Bomb extends AnimatedEntity {
 
             if(_timeAfter > 0)
                 _timeAfter--;
-            else
+            else {
                 remove();
+                increaseBombNumber();
+            }
 
         }
     }
@@ -69,6 +71,12 @@ public class Bomb extends AnimatedEntity {
         Main.flame.add(eD);
     }
 
+    public static void decreaseBombNumber() {
+        Main.BOMBNUM--;
+    }
+    public void increaseBombNumber() {
+        Main.BOMBNUM++;
+    }
     @Override
     public boolean collide(Entity e, double a, double b) {
         return true;

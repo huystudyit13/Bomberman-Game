@@ -1,4 +1,5 @@
 package oop;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -8,14 +9,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import oop.entities.*;
-import oop.entities.Enemy.Balloon;
-import oop.entities.Enemy.Oneal;
-import oop.entities.Player.Bomber;
-import oop.graphics.Sprite;
 
 
 public class Main extends Application  {
@@ -26,14 +22,17 @@ public class Main extends Application  {
     private GraphicsContext gc;
     private Canvas canvas;
     private TileMap tileMap;
-    private int FPS = 30;
-    private int targetTime = 1000 / FPS;
     private static Scene scene;
+
+    public static double SPEEDNUM = 2;
+    public static int BOMBNUM = 1;
+    public static int FLAMENUM = 1;
 
     public static List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> bomb = new ArrayList<>();
     public static List<Entity> flame = new ArrayList<>();
+    public static List<Entity> item = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -64,8 +63,8 @@ public class Main extends Application  {
         };
         timer.start();
 
-        tileMap = new TileMap(stillObjects, entities);
-
+        //tao map
+        tileMap = new TileMap(stillObjects, entities, item);
 
     }
 
@@ -78,6 +77,7 @@ public class Main extends Application  {
         stillObjects.forEach(Entity::update);
         bomb.forEach(Entity::update);
         flame.forEach(Entity::update);
+        item.forEach(Entity::update);
 
         for (int i = 0; i < entities.size(); i++) {
             Entity a = entities.get(i);
@@ -99,11 +99,17 @@ public class Main extends Application  {
             if(a.isRemoved()) flame.remove(i);
         }
 
+        for (int i = 0; i < item.size(); i++) {
+            Entity a = item.get(i);
+            if(a.isRemoved()) item.remove(i);
+        }
+
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
+        item.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
         bomb.forEach(g -> g.render(gc));
         flame.forEach(g -> g.render(gc));
