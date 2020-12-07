@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import oop.entities.*;
+import oop.entities.Bomb.Bomb;
 import oop.entities.ai.AI;
 import oop.graphics.Sprite;
 import oop.Main;
@@ -92,24 +93,23 @@ public abstract class Enemy extends AnimatedEntity {
         for (Entity e : Main.entities) {
             if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) return false;
         }
-        for(Entity e : Main.stillObjects) {
-            if(e instanceof Grass) return true;
+        for (Entity e : Main.bomb) {
+            if ((e instanceof Bomb && collide(e,x,y))) return false;
         }
 		return true;
 	}
 
-    @Override
     public boolean collide(Entity e, double a , double b) {
-		double leftA = x + a;   double leftB = e.getX();
-		double rightA = x + Sprite.SCALED_SIZE + a; double rightB = e.getX() + Sprite.SCALED_SIZE;
-		double topA = y + b;     double topB = e.getY();
-		double bottomA = y + Sprite.SCALED_SIZE + b;  double bottomB = e.getY() + Sprite.SCALED_SIZE;
-		if (( bottomA > topB ) && ( topA < bottomB ) && ( rightA > leftB ) && ( leftA < rightB )  )
-		{
-			return true;
-		}
-		return false;
-	}
+        double leftA = x + a;                        double leftB = e.getX();
+        double rightA = x + Sprite.SCALED_SIZE + a;  double rightB = e.getX() + Sprite.SCALED_SIZE;
+        double topA = y + b ;                        double topB = e.getY();
+        double bottomA = y + Sprite.SCALED_SIZE + b; double bottomB = e.getY() + Sprite.SCALED_SIZE;
+        if (( bottomA > topB ) && ( topA < bottomB ) && ( rightA > leftB ) && ( leftA < rightB )  )
+        {
+            return true;
+        }
+        return false;
+    }
 
     protected abstract void chooseSprite();
 }

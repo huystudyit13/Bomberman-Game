@@ -73,21 +73,10 @@ public class Main extends Application  {
     }
 
     public void update() {
-        entities.forEach(Entity::update);
-        stillObjects.forEach(Entity::update);
         bomb.forEach(Entity::update);
+        entities.forEach(Entity::update);
         flame.forEach(Entity::update);
         item.forEach(Entity::update);
-
-        for (int i = 0; i < entities.size(); i++) {
-            Entity a = entities.get(i);
-            if(a.isRemoved()) entities.remove(i);
-        }
-
-        for (int i = 0; i < stillObjects.size(); i++) {
-            Entity a = stillObjects.get(i);
-            if(a.isRemoved()) stillObjects.remove(i);
-        }
 
         for (int i = 0; i < bomb.size(); i++) {
             Entity a = bomb.get(i);
@@ -97,11 +86,6 @@ public class Main extends Application  {
         for (int i = 0; i < flame.size(); i++) {
             Entity a = flame.get(i);
             if(a.isRemoved()) flame.remove(i);
-        }
-
-        for (int i = 0; i < item.size(); i++) {
-            Entity a = item.get(i);
-            if(a.isRemoved()) item.remove(i);
         }
 
     }

@@ -37,7 +37,7 @@ public class Bomber extends Character {
 
     @Override
     public void update() {
-        System.out.println("bombnumber : " + Main.BOMBNUM + "\tspeed : " + Main.SPEEDNUM + "\tflame : " + Main.FLAMENUM);
+        //System.out.println("bombnumber : " + Main.BOMBNUM + "\tspeed : " + Main.SPEEDNUM + "\tflame : " + Main.FLAMENUM);
         keyboard(Main.getScene());
 
         if (_alive) {
@@ -65,12 +65,11 @@ public class Bomber extends Character {
         gc.drawImage(img,x,y);
     }
 
-    @Override
     public boolean collide(Entity e, double a , double b) {
-        double leftA = x + a; double leftB = e.getX();
-        double rightA = x + Sprite.SCALED_SIZE - 10 + a; double rightB = e.getX() + Sprite.SCALED_SIZE;
-        double topA = y + b ;     double topB = e.getY();
-        double bottomA = y + Sprite.SCALED_SIZE + b - 10;  double bottomB = e.getY() + Sprite.SCALED_SIZE;
+        double leftA = x + a;                             double leftB = e.getX();
+        double rightA = x + Sprite.SCALED_SIZE - 10 + a;  double rightB = e.getX() + Sprite.SCALED_SIZE;
+        double topA = y + b ;                             double topB = e.getY();
+        double bottomA = y + Sprite.SCALED_SIZE + b - 10; double bottomB = e.getY() + Sprite.SCALED_SIZE;
         if (( bottomA > topB ) && ( topA < bottomB ) && ( rightA > leftB ) && ( leftA < rightB )  )
             {
                 return true;
@@ -143,26 +142,27 @@ public class Bomber extends Character {
                 return true;
             }
         }
-        for(Entity e : Main.item) {
+        for (int i = 0; i < Main.item.size(); i++) {
+            Entity e = Main.item.get(i);
             if((e instanceof SpeedPoweredUp) && collide(e,x,y)) {
                 SpeedPoweredUp._active = true;
                 Main.SPEEDNUM += 0.5;
+                Main.item.remove(i);
                 return true;
             }
             else if ((e instanceof BombPoweredUp) && collide(e,x,y)) {
                 BombPoweredUp._active = true;
                 Main.BOMBNUM++;
+                Main.item.remove(i);
                 return true;
             }
             else if((e instanceof FlamePoweredUp) && collide(e,x,y)) {
                 FlamePoweredUp._active = true;
                 Main.FLAMENUM++;
+                Main.item.remove(i);
                 return true;
             }
 
-        }
-        for(Entity e : Main.stillObjects) {
-            if(e instanceof Grass) return true;
         }
 
         return true;
@@ -188,7 +188,7 @@ public class Bomber extends Character {
     public void placeBomb(int x, int y) {
         if (Main.BOMBNUM > 0) {
             if (placeBomb) {
-                Entity e = new Bomb(x/48,y/48, Sprite.bomb.getFxImage());
+                Entity e = new Bomb((int) (x + 24) / 48,(int) (y + 24) / 48, Sprite.bomb.getFxImage());
                 Main.bomb.add(e);
                 Bomb.decreaseBombNumber();
                 placeBomb = false;

@@ -48,5 +48,4 @@ public abstract class Entity {
 
     public abstract void render(GraphicsContext gc);
 
-    public abstract boolean collide(Entity e, double a , double b);
 }

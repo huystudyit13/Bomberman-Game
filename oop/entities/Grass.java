@@ -20,8 +20,4 @@ public class Grass extends Entity {
         gc.drawImage(img,x,y);
     }
 
-    @Override
-    public boolean collide(Entity e, double a , double b) {
-        return false;
-    }
 }

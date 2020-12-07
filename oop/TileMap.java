@@ -21,7 +21,7 @@ public class TileMap {
     private int mapHeight = 13;
 
     private int [][] map;
-    private String urlMap = "D:\\Code big project\\Dic1\\Bommerman\\src\\oop\\res\\levels\\level1.txt";
+    private String urlMap = "E:\\IdeaProjects\\bomberman-game\\src\\oop\\res\\levels\\level1.txt";
 
 
     public TileMap(List<Entity> stillObjects, List<Entity> entities, List<Entity> item) throws IOException {
@@ -72,6 +72,10 @@ public class TileMap {
                         break;
                     case 7 :
                         object = new SpeedPoweredUp(col, row, Sprite.powerup_speed.getFxImage());
+                        item.add(object);
+                        break;
+                    case 9 :
+                        object = new FlamePoweredUp(col, row, Sprite.powerup_flames.getFxImage());
                         item.add(object);
                         break;
                 }
