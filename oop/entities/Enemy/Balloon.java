@@ -7,6 +7,8 @@ import oop.entities.Entity;
 import oop.graphics.Sprite;
 import oop.entities.ai.AILow;
 
+import java.util.Random;
+
 public class Balloon extends Enemy {
     public Balloon(int xUnit, int yUnit, Image img, double _speed) {
         super(xUnit, yUnit, img, _speed);
@@ -14,6 +16,30 @@ public class Balloon extends Enemy {
         //_sprite = Sprite.balloom_left1;
         _ai = new AILow();
         _direction = _ai.calculateDirection();
+    }
+
+    @Override
+    public void calculateMove() {
+        double xa = 0, ya = 0;
+        Random rd = new Random();
+        if(_steps <= 0){
+            _direction = rd.nextInt(4);
+            _steps = MAX_STEPS;
+        }
+
+        if(_direction == 0) ya--; // len tren
+        if(_direction == 2) ya++; // xuong
+        if(_direction == 3) xa--; // phai
+        if(_direction == 1) xa++; // trai
+
+        if(canMove(xa, ya)) {
+            _steps -= 1 + rest;
+            move(xa * speed, ya * speed);
+            _moving = true;
+        } else {
+            _steps = 0;
+            _moving = false;
+        }
     }
 
     @Override

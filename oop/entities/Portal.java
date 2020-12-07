@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Portal extends Entity {
-
+    public static boolean isClearStage = false;
     public Portal(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
@@ -12,7 +12,9 @@ public class Portal extends Entity {
 
     @Override
     public void update() {
-
+        if(isClearStage) {
+            System.out.println("You Win!");
+        }
     }
 
     @Override

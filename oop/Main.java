@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import oop.entities.*;
+import oop.entities.Player.Bomber;
 
 
 public class Main extends Application  {
@@ -97,5 +98,14 @@ public class Main extends Application  {
         entities.forEach(g -> g.render(gc));
         bomb.forEach(g -> g.render(gc));
         flame.forEach(g -> g.render(gc));
+    }
+
+    public static Bomber getBomber() {
+
+        for (int i = 0; i < entities.size(); i++) {
+            Entity a = entities.get(i);
+            if(a instanceof Bomber) return (Bomber) a;
+        }
+        return null;
     }
 }

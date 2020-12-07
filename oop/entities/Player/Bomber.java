@@ -8,16 +8,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import oop.Main;
+import oop.RowCol2D;
+import oop.entities.*;
 import oop.entities.Bomb.Bomb;
-import oop.entities.Brick;
 import oop.entities.Enemy.Balloon;
-import oop.entities.Entity;
-import oop.entities.Grass;
 import oop.entities.Item.BombPoweredUp;
 import oop.entities.Item.FlamePoweredUp;
 import oop.entities.Item.Item;
 import oop.entities.Item.SpeedPoweredUp;
-import oop.entities.Wall;
 import oop.graphics.Sprite;
 
 public class Bomber extends Character {
@@ -26,7 +24,7 @@ public class Bomber extends Character {
     private boolean right = false;
     private boolean left = false;
     private boolean placeBomb = false;
-    private int temp = 1;
+    private boolean temp = true;
 
     protected BombPoweredUp bombitem;
 
@@ -38,6 +36,7 @@ public class Bomber extends Character {
     @Override
     public void update() {
         //System.out.println("bombnumber : " + Main.BOMBNUM + "\tspeed : " + Main.SPEEDNUM + "\tflame : " + Main.FLAMENUM);
+        //System.out.println(x + "\t" + y);
         keyboard(Main.getScene());
 
         if (_alive) {
@@ -57,9 +56,13 @@ public class Bomber extends Character {
 
         }
         else {
-            _sprite = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, _animate, 20);
-            animate();
-            img = _sprite.getFxImage();
+            if(temp) {
+                _sprite = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, _animate, 20);
+                animate();
+                img = _sprite.getFxImage();
+                temp = false;
+            }
+
         }
 
         gc.drawImage(img,x,y);
@@ -92,6 +95,7 @@ public class Bomber extends Character {
                     case D: right = true; break;
 
                     case SPACE: placeBomb = true; break;
+                    case ENTER: Portal.isClearStage = true; break;
                 }
             }
         });
@@ -118,7 +122,7 @@ public class Bomber extends Character {
     private void calculateMove() {
         // TODO: xử lý nhận tín hiệu điều khiển hướng đi từ _input và gọi move() để thực hiện di chuyển
         // TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
-        int xa = 0, ya = 0;
+        double xa = 0, ya = 0;
         if(up) ya--;
         if(down) ya++;
         if(left) xa--;
@@ -140,6 +144,9 @@ public class Bomber extends Character {
             if((e instanceof Balloon) && collide(e,x,y)) {
                 _alive = false;
                 return true;
+            }
+            if((e instanceof Portal) && collide(e,x,y) && !Portal.isClearStage) {
+                return false;
             }
         }
         for (int i = 0; i < Main.item.size(); i++) {
@@ -185,7 +192,7 @@ public class Bomber extends Character {
 
     }
 
-    public void placeBomb(int x, int y) {
+    public void placeBomb(double x, double y) {
         if (Main.BOMBNUM > 0) {
             if (placeBomb) {
                 Entity e = new Bomb((int) (x + 24) / 48,(int) (y + 24) / 48, Sprite.bomb.getFxImage());

@@ -56,32 +56,8 @@ public abstract class Enemy extends AnimatedEntity {
         gc.drawImage(img,x,y);
     }
 
-    public void calculateMove() {
-        // TODO: Tính toán hướng đi và di chuyển Enemy theo _ai và cập nhật giá trị cho _direction
-        // TODO: sử dụng canMove() để kiểm tra xem có thể di chuyển tới điểm đã tính toán hay không
-        // TODO: sử dụng move() để di chuyển
-        // TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
-        int xa = 0, ya = 0;
-        Random rd = new Random();
-        if(_steps <= 0){
-            _direction = rd.nextInt(4);
-            _steps = MAX_STEPS;
-        }
-
-        if(_direction == 0) ya--;
-        if(_direction == 2) ya++;
-        if(_direction == 3) xa--;
-        if(_direction == 1) xa++;
-
-        if(canMove(xa, ya)) {
-            _steps -= 1 + rest;
-            move(xa * speed, ya * speed);
-            _moving = true;
-        } else {
-            _steps = 0;
-            _moving = false;
-        }
-    }
+    protected abstract void calculateMove();
+    protected abstract void chooseSprite();
 
     public void move(double xa, double ya) {
         if(!_alive) return;
@@ -111,5 +87,4 @@ public abstract class Enemy extends AnimatedEntity {
         return false;
     }
 
-    protected abstract void chooseSprite();
 }

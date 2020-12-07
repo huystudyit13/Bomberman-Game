@@ -14,7 +14,6 @@ public abstract class Item extends Entity {
     @Override
     public void update() {
         if(_active) {
-            remove();
             _active = false;
         }
     }
