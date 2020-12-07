@@ -3,6 +3,7 @@ package oop.entities.Bomb;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import oop.Audio;
 import oop.Main;
 import oop.entities.AnimatedEntity;
 import oop.entities.Brick;
@@ -34,6 +35,7 @@ public class Bomb extends AnimatedEntity {
             if(!_exploded) {
                 explode();
                 increaseBombNumber();
+                Audio.bombexplode();
             }
             else ;
 

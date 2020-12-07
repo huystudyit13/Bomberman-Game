@@ -4,17 +4,15 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import oop.Audio;
 import oop.Main;
-import oop.RowCol2D;
 import oop.entities.*;
 import oop.entities.Bomb.Bomb;
 import oop.entities.Enemy.Balloon;
 import oop.entities.Item.BombPoweredUp;
 import oop.entities.Item.FlamePoweredUp;
-import oop.entities.Item.Item;
 import oop.entities.Item.SpeedPoweredUp;
 import oop.graphics.Sprite;
 
@@ -74,9 +72,9 @@ public class Bomber extends Character {
         double topA = y + b ;                             double topB = e.getY();
         double bottomA = y + Sprite.SCALED_SIZE + b - 10; double bottomB = e.getY() + Sprite.SCALED_SIZE;
         if (( bottomA > topB ) && ( topA < bottomB ) && ( rightA > leftB ) && ( leftA < rightB )  )
-            {
-                return true;
-            }
+        {
+            return true;
+        }
         return false;
     }
 
@@ -142,6 +140,7 @@ public class Bomber extends Character {
                 return false;
             }
             if((e instanceof Balloon) && collide(e,x,y)) {
+                Audio.bomberdie();
                 _alive = false;
                 return true;
             }
@@ -152,18 +151,19 @@ public class Bomber extends Character {
         for (int i = 0; i < Main.item.size(); i++) {
             Entity e = Main.item.get(i);
             if((e instanceof SpeedPoweredUp) && collide(e,x,y)) {
+                Audio.item();
                 SpeedPoweredUp._active = true;
                 Main.SPEEDNUM += 0.5;
                 Main.item.remove(i);
                 return true;
-            }
-            else if ((e instanceof BombPoweredUp) && collide(e,x,y)) {
+            } else if ((e instanceof BombPoweredUp) && collide(e,x,y)) {
+                Audio.item();
                 BombPoweredUp._active = true;
                 Main.BOMBNUM++;
                 Main.item.remove(i);
                 return true;
-            }
-            else if((e instanceof FlamePoweredUp) && collide(e,x,y)) {
+            } else if((e instanceof FlamePoweredUp) && collide(e,x,y)) {
+                Audio.item();
                 FlamePoweredUp._active = true;
                 Main.FLAMENUM++;
                 Main.item.remove(i);
@@ -195,6 +195,7 @@ public class Bomber extends Character {
     public void placeBomb(double x, double y) {
         if (Main.BOMBNUM > 0) {
             if (placeBomb) {
+                Audio.placeBomb();
                 Entity e = new Bomb((int) (x + 24) / 48,(int) (y + 24) / 48, Sprite.bomb.getFxImage());
                 Main.bomb.add(e);
                 Bomb.decreaseBombNumber();

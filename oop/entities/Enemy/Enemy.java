@@ -5,11 +5,8 @@ import javafx.scene.image.Image;
 
 import oop.entities.*;
 import oop.entities.Bomb.Bomb;
-import oop.entities.ai.AI;
 import oop.graphics.Sprite;
 import oop.Main;
-
-import java.util.Random;
 
 public abstract class Enemy extends AnimatedEntity {
     protected double speed;
@@ -19,7 +16,7 @@ public abstract class Enemy extends AnimatedEntity {
     protected boolean _alive = true;
     protected boolean _moving = false;
 
-    protected AI _ai;
+
 
     protected int _direction = -1;
 
@@ -65,15 +62,15 @@ public abstract class Enemy extends AnimatedEntity {
         x += xa;
     }
 
-    	public boolean canMove(double x, double y) {
+    public boolean canMove(double x, double y) {
         for (Entity e : Main.entities) {
             if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) return false;
         }
         for (Entity e : Main.bomb) {
             if ((e instanceof Bomb && collide(e,x,y))) return false;
         }
-		return true;
-	}
+        return true;
+    }
 
     public boolean collide(Entity e, double a , double b) {
         double leftA = x + a;                        double leftB = e.getX();

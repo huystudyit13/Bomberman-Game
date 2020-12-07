@@ -1,7 +1,6 @@
 package oop;
 
 import oop.entities.*;
-import oop.entities.Bomb.Bomb;
 import oop.entities.Enemy.Balloon;
 import oop.entities.Enemy.Oneal;
 import oop.entities.Item.BombPoweredUp;
@@ -21,9 +20,7 @@ public class TileMap {
     private int mapHeight = 13;
 
     private int [][] map;
-    private String urlMap = "D:\\Code big project\\Dic1\\Bommerman\\src\\oop\\res\\levels\\level1.txt";
-    //private String urlMap ="/oop/res/levels/level1.txt";
-
+    private String urlMap = "E:\\IdeaProjects\\bomberman-game\\src\\oop\\res\\levels\\level1.txt";
 
     public TileMap(List<Entity> stillObjects, List<Entity> entities, List<Entity> item) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(urlMap));
@@ -54,6 +51,8 @@ public class TileMap {
                     case 3 :
                         object = new Portal(col, row, Sprite.portal.getFxImage());
                         entities.add(object);
+                        object = new Brick(col, row, Sprite.brick.getFxImage());
+                        entities.add(object);
                         break;
                     case 4 :
                         object = new Bomber(col, row, Sprite.player_right.getFxImage());
@@ -64,20 +63,26 @@ public class TileMap {
                         entities.add(object);
                         break;
                     case 6 :
-                        object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(),1, Main.getBomber());
+                        object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(),2, Main.getBomber());
                         entities.add(object);
                         break;
                     case 8 :
                         object = new BombPoweredUp(col, row, Sprite.powerup_bombs.getFxImage());
                         item.add(object);
+                        object = new Brick(col, row, Sprite.brick.getFxImage());
+                        entities.add(object);
                         break;
                     case 7 :
                         object = new SpeedPoweredUp(col, row, Sprite.powerup_speed.getFxImage());
                         item.add(object);
+                        object = new Brick(col, row, Sprite.brick.getFxImage());
+                        entities.add(object);
                         break;
                     case 9 :
                         object = new FlamePoweredUp(col, row, Sprite.powerup_flames.getFxImage());
                         item.add(object);
+                        object = new Brick(col, row, Sprite.brick.getFxImage());
+                        entities.add(object);
                         break;
                 }
 

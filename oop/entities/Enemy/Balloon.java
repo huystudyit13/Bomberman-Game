@@ -1,15 +1,14 @@
 package oop.entities.Enemy;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import oop.entities.Entity;
+import oop.entities.ai.AI;
 import oop.graphics.Sprite;
 import oop.entities.ai.AILow;
 
-import java.util.Random;
 
 public class Balloon extends Enemy {
+    protected AI _ai;
     public Balloon(int xUnit, int yUnit, Image img, double _speed) {
         super(xUnit, yUnit, img, _speed);
 
@@ -21,9 +20,8 @@ public class Balloon extends Enemy {
     @Override
     public void calculateMove() {
         double xa = 0, ya = 0;
-        Random rd = new Random();
         if(_steps <= 0){
-            _direction = rd.nextInt(4);
+            _direction = _ai.calculateDirection();
             _steps = MAX_STEPS;
         }
 

@@ -2,6 +2,7 @@ package oop.entities.Bomb;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import oop.Audio;
 import oop.Main;
 import oop.entities.AnimatedEntity;
 import oop.entities.Brick;
@@ -95,9 +96,11 @@ public class Flame extends AnimatedEntity {
     public void check() {
         for (int i = 0; i < Main.entities.size(); i++) {
             Entity e = Main.entities.get(i);
-            if(collide(e) && e instanceof Brick) Main.entities.remove(i);
-            if(collide(e) && e instanceof Balloon) Main.entities.remove(i);
-            if(collide(e) && e instanceof Oneal) Main.entities.remove(i);
+            if(e instanceof Brick && collide(e)) Main.entities.remove(i);
+            else if((e instanceof Balloon && collide(e)) || (e instanceof Oneal && collide(e)) ) {
+                Audio.botdie();
+                Main.entities.remove(i);
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ public class Oneal extends Enemy {
         double xa = 0, ya = 0;
 
         double xPlayer = bomber.getXTile() * 48 , yPlayer = bomber.getYTile() * 48;
-        System.out.println(xPlayer + "\t" + yPlayer);
+        //System.out.println(xPlayer + "\t" + yPlayer);
         if (xPlayer < x) _direction = 1;
         else if (xPlayer > x) _direction = 3;
         else if (yPlayer < y) _direction = 0;

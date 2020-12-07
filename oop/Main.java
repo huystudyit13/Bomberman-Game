@@ -55,6 +55,7 @@ public class Main extends Application  {
         // Them scene vao stage
         primaryStage.setScene(scene);
         primaryStage.show();
+        //Audio.backgr();
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
