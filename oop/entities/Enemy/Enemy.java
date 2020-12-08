@@ -9,7 +9,6 @@ import oop.entities.*;
 import oop.entities.Bomb.Bomb;
 import oop.entities.Player.Bomber;
 import oop.graphics.Sprite;
-import oop.Main;
 
 import java.util.Random;
 
@@ -19,8 +18,8 @@ public abstract class Enemy extends AnimatedEntity {
     protected double _steps;
     protected boolean _alive = true;
     protected boolean _moving = false;
-
     protected Random random = new Random();
+
     protected int _direction = -1;
 
     public Enemy(int xUnit, int yUnit, Image img, double _speed) {
@@ -37,13 +36,13 @@ public abstract class Enemy extends AnimatedEntity {
         if(_alive) {
             calculateMove();
         }
+
     }
 
     @Override
     public void render(GraphicsContext gc) {
         if(_alive) {
             chooseSprite();
-            //img = _sprite.getFxImage();
 
             animate();
         }
@@ -78,16 +77,5 @@ public abstract class Enemy extends AnimatedEntity {
         return true;
     }
 
-    public boolean collide(Entity e, double a , double b) {
-        double leftA = x + a;                        double leftB = e.getX();
-        double rightA = x + Sprite.SCALED_SIZE + a;  double rightB = e.getX() + Sprite.SCALED_SIZE;
-        double topA = y + b ;                        double topB = e.getY();
-        double bottomA = y + Sprite.SCALED_SIZE + b; double bottomB = e.getY() + Sprite.SCALED_SIZE;
-        if (( bottomA > topB ) && ( topA < bottomB ) && ( rightA > leftB ) && ( leftA < rightB )  )
-        {
-            return true;
-        }
-        return false;
-    }
 
 }

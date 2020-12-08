@@ -1,7 +1,13 @@
 package oop.entities.Enemy;
 
 import javafx.scene.image.Image;
+import oop.BombermanGame;
+import oop.audio.Audio;
+import oop.entities.Bomb.Bomb;
+import oop.entities.Brick;
+import oop.entities.Entity;
 import oop.entities.Player.Bomber;
+import oop.entities.Wall;
 import oop.graphics.Sprite;
 
 public class Doria extends Enemy{
@@ -27,7 +33,7 @@ public class Doria extends Enemy{
         if(_direction == 1) xa--; // phai
         if(_direction == 3) xa++; // trai
 
-        if(true) {
+        if(canMove(xa, ya)) {
             _steps -= 1 ;
             move(xa * speed, ya * speed);
             _moving = true;
@@ -51,5 +57,20 @@ public class Doria extends Enemy{
                 img = _sprite.getFxImage();
                 break;
         }
+    }
+
+    public boolean canMove(double x, double y) {
+        for (Entity e : BombermanGame.entities) {
+            if (e instanceof Wall && collide(e,x,y)) return false;
+            else if (e instanceof Bomber && collide(e,x,y)) {
+                Audio.bomberdie();
+                e.set_alive(false);
+                return false;
+            }
+        }
+        for (Entity e : BombermanGame.bomb) {
+            if ((e instanceof Bomb && collide(e,x,y))) return false;
+        }
+        return true;
     }
 }

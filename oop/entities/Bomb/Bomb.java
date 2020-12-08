@@ -5,10 +5,10 @@ import javafx.scene.image.Image;
 
 import oop.audio.Audio;
 import oop.BombermanGame;
-import oop.Main;
 import oop.entities.AnimatedEntity;
 import oop.entities.Brick;
 import oop.entities.Entity;
+import oop.entities.Player.Bomber;
 import oop.entities.Wall;
 import oop.graphics.Sprite;
 
@@ -19,9 +19,9 @@ public class Bomb extends AnimatedEntity {
     private boolean down = true;
     private boolean right = true;
     private boolean left = true;
-
+    private boolean atBomb = false;
     public boolean _exploded = false;
-    public boolean kt = false;
+
     public Bomb(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
     }
@@ -51,13 +51,10 @@ public class Bomb extends AnimatedEntity {
 
         if(_exploded) {
             _sprite =  Sprite.bomb_exploded;
-            if (kt) {
-                //remove();
-            }
-            kt = true;
-        } else
+            check();
+        } else {
             _sprite = Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1, Sprite.bomb_2, _animate, 60);
-
+        }
         img = _sprite.getFxImage();
         gc.drawImage(img,x,y);
     }
@@ -201,22 +198,29 @@ public class Bomb extends AnimatedEntity {
         return 0;
     }
 
-    public boolean collide(Entity e, double a , double b) {
-        double leftA = x + a;                        double leftB = e.getX();
-        double rightA = x + Sprite.SCALED_SIZE + a;  double rightB = e.getX() + Sprite.SCALED_SIZE;
-        double topA = y + b ;                        double topB = e.getY();
-        double bottomA = y + Sprite.SCALED_SIZE + b; double bottomB = e.getY() + Sprite.SCALED_SIZE;
-        if (( bottomA > topB ) && ( topA < bottomB ) && ( rightA > leftB ) && ( leftA < rightB )  )
-        {
-            return true;
+
+    public void check() {
+        for (Entity e : BombermanGame.entities) {
+            if (e instanceof Bomber && collide(e,0,0)) {
+                Audio.bomberdie();
+                //e.set_alive(false);
+            }
         }
-        return false;
     }
 
     public static void decreaseBombNumber() {
         BombermanGame.BOMBNUM--;
     }
+
     public void increaseBombNumber() {
         BombermanGame.BOMBNUM++;
+    }
+
+    public void setAtBomb(boolean atBomb) {
+        this.atBomb = atBomb;
+    }
+
+    public boolean isAtBomb() {
+        return atBomb;
     }
 }

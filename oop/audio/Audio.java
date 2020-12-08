@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 public class Audio {
     protected static MediaPlayer meidaPlayer;
-    protected static final String file = "D:\\Code big project\\Dic1\\Bommerman\\src\\oop\\res\\audio\\";
+    protected static final String file = "E:\\IdeaProjects\\bomberman-game\\src\\oop\\res\\audio\\";
     public static void backgr() {
         String s = file + "16.mp3";
         Media media = new Media(Paths.get(s).toUri().toString());

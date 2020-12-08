@@ -24,7 +24,6 @@ public class Bomber extends Character {
     private boolean placeBomb = false;
     private int temp = 3;
 
-    protected BombPoweredUp bombitem;
 
     public Bomber(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -33,10 +32,7 @@ public class Bomber extends Character {
 
     @Override
     public void update() {
-        //System.out.println("bombnumber : " + Main.BOMBNUM + "\tspeed : " + Main.SPEEDNUM + "\tflame : " + Main.FLAMENUM);
-        //System.out.println(x + "\t" + y);
         keyboard(BombermanGame.getScene());
-
         if (_alive) {
             calculateMove();
             placeBomb(x,y);
@@ -53,10 +49,15 @@ public class Bomber extends Character {
 
         } else {
             if(temp > 0) {
-                _sprite = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, _animate, 20);
+                _sprite = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, _animate, 30);
                 animate();
                 img = _sprite.getFxImage();
                 temp--;
+            } else {
+                for (int i = 0; i < BombermanGame.entities.size(); i++) {
+                    Entity e = BombermanGame.entities.get(i);
+                    if(e instanceof Bomber) BombermanGame.entities.remove(i);
+                }
             }
 
         }
@@ -142,19 +143,19 @@ public class Bomber extends Character {
         }
         for (int i = 0; i < BombermanGame.item.size(); i++) {
             Entity e = BombermanGame.item.get(i);
-            if((e instanceof SpeedPoweredUp) && collide(e,x,y)) {
+            if((e instanceof SpeedPoweredUp) && collide(e,0,0)) {
                 Audio.item();
                 SpeedPoweredUp._active = true;
                 BombermanGame.SPEEDNUM += 0.5;
                 BombermanGame.item.remove(i);
                 return true;
-            } else if ((e instanceof BombPoweredUp) && collide(e,x,y)) {
+            } else if ((e instanceof BombPoweredUp) && collide(e,0,0)) {
                 Audio.item();
                 BombPoweredUp._active = true;
                 BombermanGame.BOMBNUM++;
                 BombermanGame.item.remove(i);
                 return true;
-            } else if((e instanceof FlamePoweredUp) && collide(e,x,y)) {
+            } else if((e instanceof FlamePoweredUp) && collide(e,0,0)) {
                 Audio.item();
                 FlamePoweredUp._active = true;
                 BombermanGame.FLAMENUM++;
@@ -163,6 +164,13 @@ public class Bomber extends Character {
             }
         }
 
+        for (Entity e : BombermanGame.bomb) {
+            if (!collide(e, 0, 0)) {
+                ((Bomb) e).setAtBomb(false);
+            } else if (collide(e, x, y) && !((Bomb) e).isAtBomb()) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -185,9 +193,11 @@ public class Bomber extends Character {
 
     public void placeBomb(double x, double y) {
         if (BombermanGame.BOMBNUM > 0) {
+            checkBomb();
             if (placeBomb) {
                 Audio.placeBomb();
                 Entity e = new Bomb((int) (x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE,(int) (y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
+                ((Bomb) e).setAtBomb(true);
                 BombermanGame.bomb.add(e);
                 Bomb.decreaseBombNumber();
                 placeBomb = false;
@@ -227,6 +237,14 @@ public class Bomber extends Character {
                     _sprite = Sprite.movingSprite(Sprite.player_right_1, Sprite.player_right_2, _animate, 20);
                 }
                 break;
+        }
+    }
+
+    public void checkBomb() {
+        for (Entity e : BombermanGame.bomb) {
+            if ((int) e.getX() / Sprite.SCALED_SIZE == (int) this.x / Sprite.SCALED_SIZE && (int) e.getY() / Sprite.SCALED_SIZE == (int) this.y / Sprite.SCALED_SIZE) {
+                placeBomb = false;
+            }
         }
     }
 }

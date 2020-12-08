@@ -2,13 +2,13 @@ package oop.entities.Enemy;
 
 import javafx.scene.image.Image;
 
-import oop.entities.Player.Bomber;
 import oop.graphics.Sprite;
 
 
 public class Balloon extends Enemy {
     public Balloon(int xUnit, int yUnit, Image img, double _speed) {
         super(xUnit, yUnit, img, _speed);
+
         _direction = 1;
     }
 
@@ -26,7 +26,7 @@ public class Balloon extends Enemy {
         if(_direction == 1) xa++; // trai
 
         if(canMove(xa, ya)) {
-            _steps -= 1 ;
+            _steps -= 1;
             move(xa * speed, ya * speed);
             _moving = true;
         } else {

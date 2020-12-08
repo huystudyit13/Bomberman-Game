@@ -1,21 +1,18 @@
 package oop.entities.Enemy;
 
-import oop.entities.Player.Bomber;
 import oop.graphics.Sprite;
 import javafx.scene.image.Image;
 
 public class Oneal extends Enemy {
-
     public Oneal(int xUnit, int yUnit, Image img, double _speed) {
         super(xUnit, yUnit, img, _speed);
-
         _direction = 1;
-
     }
 
     @Override
     protected void calculateMove() {
         double xa = 0, ya = 0;
+
         if(_steps <= 0){
             _direction = random.nextInt(4);
             _steps = MAX_STEPS;
@@ -27,7 +24,7 @@ public class Oneal extends Enemy {
         if(_direction == 1) xa++; // trai
 
         if(canMove(xa, ya)) {
-            _steps -= 1 ;
+            _steps -= 1;
             move(xa * speed, ya * speed);
             _moving = true;
         } else {
@@ -51,7 +48,6 @@ public class Oneal extends Enemy {
                 break;
         }
     }
-
 
 
 }
