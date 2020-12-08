@@ -5,6 +5,8 @@ import oop.entities.Player.Bomber;
 import oop.graphics.Sprite;
 
 public class Doll extends Enemy {
+    private int timeToMove = 1;
+    private int tempdirect = 0;
     Bomber bomber;
     public Doll(int xUnit, int yUnit, Image img, double _speed, Bomber _bomber) {
         super(xUnit, yUnit, img, _speed);
@@ -22,6 +24,14 @@ public class Doll extends Enemy {
         else if (yPlayer < y) _direction = 0;
         else if (yPlayer > y) _direction = 2;
 
+        tempdirect = _direction;
+        if (timeToMove > 0) {
+            timeToMove--;
+        } else {
+            if (yPlayer < y) _direction = 0;
+            if (yPlayer > y) _direction = 2;
+            timeToMove= 1;
+        }
         if(_direction == 0) ya--; // len tren
         if(_direction == 2) ya++; // xuong
         if(_direction == 1) xa--; // phai

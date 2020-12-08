@@ -6,10 +6,15 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import oop.audio.Audio;
 import oop.entities.Entity;
 import oop.entities.Player.Bomber;
+import oop.fileloader.TileMap;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +32,14 @@ public class BombermanGame extends Application {
     public static int BOMBNUM = 1;
     public static int FLAMENUM = 1;
 
+    public static boolean winStage = true;
+    public static boolean endGame = false;
+    public static int LEVEL = 1;
+    public int stageToWinGame = 2;
+
+    public static String urlMap = "D:\\Code big project\\Dic1\\Bommerman\\src\\oop\\res\\levels\\level";
+    public static String urlAudio = "D:\\Code big project\\Dic1\\Bommerman\\src\\oop\\res\\audio\\";
+
     public static List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Entity> bomb = new ArrayList<>();
@@ -38,7 +51,7 @@ public class BombermanGame extends Application {
         primaryStage.setTitle("Bomberman Game");
 
         // Tao canvas
-        canvas = new Canvas(WIDTH, HEIGHT);
+        canvas = new Canvas(WIDTH, HEIGHT );
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
@@ -55,21 +68,55 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                render();
-                update();
+                if (!endGame)
+                {
+                    render();
+                    update();
+                }
+                if (stageToWinGame < 0) {
+                    gc.setFont(new Font(32));
+                    gc.fillText("END",400,400);
+                    endGame = true;
+                }
+
             }
         };
         timer.start();
 
-        //tao map
-        tileMap = new TileMap(stillObjects, entities, item);
+
     }
 
     public static Scene getScene(){
         return scene;
     }
 
+    public void clearMap() {
+        for (int i = 0; i < stillObjects.size(); i++) {
+            stillObjects.remove(i);
+        }
+        for (int i = 0; i < entities.size(); i++) {
+            entities.remove(i);
+        }
+        for (int i = 0; i < item.size(); i++) {
+            item.remove(i);
+        }
+
+
+    }
+
     public void update() {
+        System.out.println(stageToWinGame);
+        if (winStage) {
+            stageToWinGame--;
+            clearMap();
+            try {
+                tileMap = new TileMap(stillObjects, entities, item);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            winStage = false;
+        }
+
         bomb.forEach(Entity::update);
         entities.forEach(Entity::update);
         flame.forEach(Entity::update);

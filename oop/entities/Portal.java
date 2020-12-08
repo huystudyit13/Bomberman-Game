@@ -2,6 +2,8 @@ package oop.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import oop.BombermanGame;
+import oop.fileloader.TileMap;
 
 public class Portal extends Entity {
     public static boolean isClearStage = false;
@@ -13,7 +15,12 @@ public class Portal extends Entity {
     @Override
     public void update() {
         if(isClearStage) {
+            BombermanGame.LEVEL++;
             System.out.println("You Win!");
+            BombermanGame.winStage = true;
+            isClearStage = false;
+            //clear list
+
         }
     }
 

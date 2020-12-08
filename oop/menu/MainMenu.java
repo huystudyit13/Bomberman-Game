@@ -50,7 +50,12 @@ public class MainMenu extends Application {
             System.out.println("ok");
         }
 
-        primaryStage.show();
+        try {
+          primaryStage.show();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
 
     }
 }

@@ -11,6 +11,7 @@ import oop.entities.Enemy.Enemy;
 import oop.entities.Enemy.Oneal;
 import oop.entities.Entity;
 import oop.entities.Player.Bomber;
+import oop.fileloader.TileMap;
 
 public class Flame extends AnimatedEntity {
     public int _timeAfter = 40;
@@ -42,9 +43,11 @@ public class Flame extends AnimatedEntity {
             Entity e = BombermanGame.entities.get(i);
             if (e instanceof Brick && collide(e,0,0)) BombermanGame.entities.remove(i);
             else if (e instanceof Enemy && collide(e,0,0)) {
+                TileMap.enemynum--;
                 Audio.botdie();
                 BombermanGame.entities.remove(i);
             } else if (e instanceof Bomber && collide(e,0,0)) {
+                BombermanGame.endGame = true;
                 Audio.bomberdie();
                 BombermanGame.entities.get(i).set_alive(false);
             }

@@ -2,12 +2,13 @@ package oop.audio;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import oop.BombermanGame;
 
 import java.nio.file.Paths;
 
 public class Audio {
     protected static MediaPlayer meidaPlayer;
-    protected static final String file = "E:\\IdeaProjects\\bomberman-game\\src\\oop\\res\\audio\\";
+    protected static final String file = BombermanGame.urlAudio;
     public static void backgr() {
         String s = file + "16.mp3";
         Media media = new Media(Paths.get(s).toUri().toString());

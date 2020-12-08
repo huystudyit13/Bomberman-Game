@@ -11,9 +11,11 @@ import oop.BombermanGame;
 import oop.Main;
 import oop.entities.*;
 import oop.entities.Bomb.Bomb;
+import oop.entities.Enemy.Enemy;
 import oop.entities.Item.BombPoweredUp;
 import oop.entities.Item.FlamePoweredUp;
 import oop.entities.Item.SpeedPoweredUp;
+import oop.fileloader.TileMap;
 import oop.graphics.Sprite;
 
 public class Bomber extends Character {
@@ -32,6 +34,7 @@ public class Bomber extends Character {
 
     @Override
     public void update() {
+        //System.out.println(BombermanGame.LEVEL);
         keyboard(BombermanGame.getScene());
         if (_alive) {
             calculateMove();
@@ -91,6 +94,7 @@ public class Bomber extends Character {
                     case S: down = true; break;
                     case D: right = true; break;
 
+                    case Z: TileMap.enemynum = 0; break;
                     case SPACE: placeBomb = true; break;
                     case ENTER: Portal.isClearStage = true; break;
                 }
@@ -110,6 +114,7 @@ public class Bomber extends Character {
                     case D: right = false; break;
 
                     case SPACE: placeBomb = false; break;
+                    case ENTER: Portal.isClearStage = false; break;
                 }
             }
         });
@@ -117,8 +122,6 @@ public class Bomber extends Character {
     }
 
     private void calculateMove() {
-        // TODO: xử lý nhận tín hiệu điều khiển hướng đi từ _input và gọi move() để thực hiện di chuyển
-        // TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
         double xa = 0, ya = 0;
         if(up) ya--;
         if(down) ya++;
@@ -138,7 +141,11 @@ public class Bomber extends Character {
             if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) {
                 return false;
             } else if((e instanceof Portal) && collide(e,x,y) && !Portal.isClearStage) {
-                return false;
+                if (TileMap.enemynum == 0) {
+                    Portal.isClearStage = true;
+                    return true;
+                }
+                else return false;
             }
         }
         for (int i = 0; i < BombermanGame.item.size(); i++) {
@@ -175,13 +182,11 @@ public class Bomber extends Character {
     }
 
     public void move(double xa, double ya) {
-        // TODO: sử dụng canMove() để kiểm tra xem có thể di chuyển tới điểm đã tính toán hay không và thực hiện thay đổi tọa độ _x, _y
-        // TODO: nhớ cập nhật giá trị _direction sau khi di chuyển
         if(xa > 0) _direction = 1;
         if(xa < 0) _direction = 3;
         if(ya > 0) _direction = 2;
         if(ya < 0) _direction = 0;
-        if(canMove(0, ya)) { //separate the moves for the player can slide when is colliding
+        if(canMove(0, ya)) {
             y += ya;
         }
 

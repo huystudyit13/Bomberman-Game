@@ -13,11 +13,11 @@ public class Main extends Application  {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        /*mainMenu = new MainMenu();
-        mainMenu.start(primaryStage);*/
+        mainMenu = new MainMenu();
+        mainMenu.start(primaryStage);
 
-        bombermanGame = new BombermanGame();
-        bombermanGame.start(primaryStage);
+//        bombermanGame = new BombermanGame();
+//        bombermanGame.start(primaryStage);
     }
 
     public static void main(String[] args) {
