@@ -19,6 +19,8 @@ public abstract class Entity {
 
     protected boolean _removed = false;
 
+    protected boolean _alive = true;
+
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity( double xUnit, double yUnit, Image img) {
         this.x = xUnit * Sprite.SCALED_SIZE;
@@ -56,4 +58,11 @@ public abstract class Entity {
         return RowCol2D.pixelToTile(y + 1);
     }
 
+    public void set_alive(boolean _alive) {
+        this._alive = _alive;
+    }
+
+    public boolean is_alive() {
+        return _alive;
+    }
 }

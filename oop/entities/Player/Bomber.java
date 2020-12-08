@@ -10,7 +10,6 @@ import oop.Audio;
 import oop.Main;
 import oop.entities.*;
 import oop.entities.Bomb.Bomb;
-import oop.entities.Enemy.Balloon;
 import oop.entities.Item.BombPoweredUp;
 import oop.entities.Item.FlamePoweredUp;
 import oop.entities.Item.SpeedPoweredUp;
@@ -22,7 +21,7 @@ public class Bomber extends Character {
     private boolean right = false;
     private boolean left = false;
     private boolean placeBomb = false;
-    private boolean temp = true;
+    private int temp = 3;
 
     protected BombPoweredUp bombitem;
 
@@ -41,7 +40,6 @@ public class Bomber extends Character {
             calculateMove();
             placeBomb(x,y);
         }
-
     }
 
     @Override
@@ -52,13 +50,12 @@ public class Bomber extends Character {
 
             animate();
 
-        }
-        else {
-            if(temp) {
+        } else {
+            if(temp > 0) {
                 _sprite = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3, _animate, 20);
                 animate();
                 img = _sprite.getFxImage();
-                temp = false;
+                temp--;
             }
 
         }
@@ -138,13 +135,7 @@ public class Bomber extends Character {
         for (Entity e : Main.entities) {
             if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) {
                 return false;
-            }
-            if((e instanceof Balloon) && collide(e,x,y)) {
-                Audio.bomberdie();
-                _alive = false;
-                return true;
-            }
-            if((e instanceof Portal) && collide(e,x,y) && !Portal.isClearStage) {
+            } else if((e instanceof Portal) && collide(e,x,y) && !Portal.isClearStage) {
                 return false;
             }
         }
@@ -169,7 +160,6 @@ public class Bomber extends Character {
                 Main.item.remove(i);
                 return true;
             }
-
         }
 
         return true;
@@ -196,7 +186,7 @@ public class Bomber extends Character {
         if (Main.BOMBNUM > 0) {
             if (placeBomb) {
                 Audio.placeBomb();
-                Entity e = new Bomb((int) (x + 24) / 48,(int) (y + 24) / 48, Sprite.bomb.getFxImage());
+                Entity e = new Bomb((int) (x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE,(int) (y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
                 Main.bomb.add(e);
                 Bomb.decreaseBombNumber();
                 placeBomb = false;

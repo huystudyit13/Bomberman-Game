@@ -3,8 +3,10 @@ package oop.entities.Enemy;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import oop.Audio;
 import oop.entities.*;
 import oop.entities.Bomb.Bomb;
+import oop.entities.Player.Bomber;
 import oop.graphics.Sprite;
 import oop.Main;
 
@@ -65,6 +67,11 @@ public abstract class Enemy extends AnimatedEntity {
     public boolean canMove(double x, double y) {
         for (Entity e : Main.entities) {
             if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) return false;
+            else if (e instanceof Bomber && collide(e,x,y)) {
+                Audio.bomberdie();
+                e.set_alive(false);
+                return false;
+            }
         }
         for (Entity e : Main.bomb) {
             if ((e instanceof Bomb && collide(e,x,y))) return false;
