@@ -2,26 +2,21 @@ package oop.entities.Enemy;
 
 import javafx.scene.image.Image;
 
-import oop.entities.ai.AI;
+import oop.entities.Player.Bomber;
 import oop.graphics.Sprite;
-import oop.entities.ai.AILow;
 
 
 public class Balloon extends Enemy {
-    protected AI _ai;
     public Balloon(int xUnit, int yUnit, Image img, double _speed) {
         super(xUnit, yUnit, img, _speed);
-
-        //_sprite = Sprite.balloom_left1;
-        _ai = new AILow();
-        _direction = _ai.calculateDirection();
+        _direction = 1;
     }
 
     @Override
     public void calculateMove() {
         double xa = 0, ya = 0;
         if(_steps <= 0){
-            _direction = _ai.calculateDirection();
+            _direction = random.nextInt(4);
             _steps = MAX_STEPS;
         }
 
@@ -31,7 +26,7 @@ public class Balloon extends Enemy {
         if(_direction == 1) xa++; // trai
 
         if(canMove(xa, ya)) {
-            _steps -= 1 + rest;
+            _steps -= 1 ;
             move(xa * speed, ya * speed);
             _moving = true;
         } else {

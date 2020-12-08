@@ -1,4 +1,4 @@
-package oop;
+package oop.function;
 
 public class RowCol2D {
     public static int pixelToTile(double i) {

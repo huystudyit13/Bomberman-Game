@@ -6,7 +6,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 
-import oop.Audio;
+import oop.audio.Audio;
+import oop.BombermanGame;
 import oop.Main;
 import oop.entities.*;
 import oop.entities.Bomb.Bomb;
@@ -34,7 +35,7 @@ public class Bomber extends Character {
     public void update() {
         //System.out.println("bombnumber : " + Main.BOMBNUM + "\tspeed : " + Main.SPEEDNUM + "\tflame : " + Main.FLAMENUM);
         //System.out.println(x + "\t" + y);
-        keyboard(Main.getScene());
+        keyboard(BombermanGame.getScene());
 
         if (_alive) {
             calculateMove();
@@ -124,7 +125,7 @@ public class Bomber extends Character {
         if(right) xa++;
 
         if(xa != 0 || ya != 0)  {
-            move(xa * Main.SPEEDNUM, ya * Main.SPEEDNUM);
+            move(xa * BombermanGame.SPEEDNUM, ya * BombermanGame.SPEEDNUM);
             _moving = true;
         } else {
             _moving = false;
@@ -132,32 +133,32 @@ public class Bomber extends Character {
     }
 
     public boolean canMove(double x, double y) {
-        for (Entity e : Main.entities) {
+        for (Entity e : BombermanGame.entities) {
             if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) {
                 return false;
             } else if((e instanceof Portal) && collide(e,x,y) && !Portal.isClearStage) {
                 return false;
             }
         }
-        for (int i = 0; i < Main.item.size(); i++) {
-            Entity e = Main.item.get(i);
+        for (int i = 0; i < BombermanGame.item.size(); i++) {
+            Entity e = BombermanGame.item.get(i);
             if((e instanceof SpeedPoweredUp) && collide(e,x,y)) {
                 Audio.item();
                 SpeedPoweredUp._active = true;
-                Main.SPEEDNUM += 0.5;
-                Main.item.remove(i);
+                BombermanGame.SPEEDNUM += 0.5;
+                BombermanGame.item.remove(i);
                 return true;
             } else if ((e instanceof BombPoweredUp) && collide(e,x,y)) {
                 Audio.item();
                 BombPoweredUp._active = true;
-                Main.BOMBNUM++;
-                Main.item.remove(i);
+                BombermanGame.BOMBNUM++;
+                BombermanGame.item.remove(i);
                 return true;
             } else if((e instanceof FlamePoweredUp) && collide(e,x,y)) {
                 Audio.item();
                 FlamePoweredUp._active = true;
-                Main.FLAMENUM++;
-                Main.item.remove(i);
+                BombermanGame.FLAMENUM++;
+                BombermanGame.item.remove(i);
                 return true;
             }
         }
@@ -183,11 +184,11 @@ public class Bomber extends Character {
     }
 
     public void placeBomb(double x, double y) {
-        if (Main.BOMBNUM > 0) {
+        if (BombermanGame.BOMBNUM > 0) {
             if (placeBomb) {
                 Audio.placeBomb();
                 Entity e = new Bomb((int) (x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE,(int) (y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE, Sprite.bomb.getFxImage());
-                Main.bomb.add(e);
+                BombermanGame.bomb.add(e);
                 Bomb.decreaseBombNumber();
                 placeBomb = false;
             }

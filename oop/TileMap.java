@@ -2,6 +2,8 @@ package oop;
 
 import oop.entities.*;
 import oop.entities.Enemy.Balloon;
+import oop.entities.Enemy.Doll;
+import oop.entities.Enemy.Doria;
 import oop.entities.Enemy.Oneal;
 import oop.entities.Item.BombPoweredUp;
 import oop.entities.Item.FlamePoweredUp;
@@ -20,7 +22,7 @@ public class TileMap {
     private int mapHeight = 13;
 
     private int [][] map;
-    private String urlMap = "E:\\IdeaProjects\\bomberman-game\\src\\oop\\res\\levels\\level1.txt";
+    private String urlMap = "D:\\Code big project\\Dic1\\Bommerman\\src\\oop\\res\\levels\\level1.txt";
 
     public TileMap(List<Entity> stillObjects, List<Entity> entities, List<Entity> item) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(urlMap));
@@ -63,7 +65,15 @@ public class TileMap {
                         entities.add(object);
                         break;
                     case 6 :
-                        object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(),2, Main.getBomber());
+                        object = new Oneal(col, row, Sprite.oneal_left1.getFxImage(),2);
+                        entities.add(object);
+                        break;
+                    case 10 :
+                        object = new Doria(col, row, Sprite.kondoria_left1.getFxImage(),0.5, BombermanGame.getBomber());
+                        entities.add(object);
+                        break;
+                    case 11 :
+                        object = new Doll(col, row, Sprite.kondoria_left1.getFxImage(),1.5, BombermanGame.getBomber());
                         entities.add(object);
                         break;
                     case 8 :

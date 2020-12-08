@@ -3,7 +3,8 @@ package oop.entities.Bomb;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import oop.Audio;
+import oop.audio.Audio;
+import oop.BombermanGame;
 import oop.Main;
 import oop.entities.AnimatedEntity;
 import oop.entities.Brick;
@@ -63,22 +64,22 @@ public class Bomb extends AnimatedEntity {
 
     public void explode() {
         _exploded = true;
-        if (Main.FLAMENUM == 1) {
+        if (BombermanGame.FLAMENUM == 1) {
             if (checkRight(1) != -1) {
                 Entity eR = new Flame((int) (x + Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE, (int) y / Sprite.SCALED_SIZE, Sprite.explosion_horizontal_right_last.getFxImage());
-                Main.flame.add(eR);
+                BombermanGame.flame.add(eR);
             }
             if (checkDown(1) != -1) {
                 Entity eD = new Flame((int) x / Sprite.SCALED_SIZE, (int) (y + Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE, Sprite.explosion_vertical_down_last.getFxImage());
-                Main.flame.add(eD);
+                BombermanGame.flame.add(eD);
             }
             if (checkLeft(1) != -1) {
                 Entity eL = new Flame((int) (x - Sprite.SCALED_SIZE) / 48, (int) y / Sprite.SCALED_SIZE, Sprite.explosion_horizontal_left_last.getFxImage());
-                Main.flame.add(eL);
+                BombermanGame.flame.add(eL);
             }
             if (checkUp(1) != -1) {
                 Entity eU = new Flame((int) (x) / Sprite.SCALED_SIZE, (int) (y - Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE, Sprite.explosion_vertical_top_last.getFxImage());
-                Main.flame.add(eU);
+                BombermanGame.flame.add(eU);
             }
         } else {
             int cntR = 0;
@@ -87,7 +88,7 @@ public class Bomb extends AnimatedEntity {
             int cntD = 0;
 
             //flame right count
-            for (int i = 1; i <= Main.FLAMENUM; i++) {
+            for (int i = 1; i <= BombermanGame.FLAMENUM; i++) {
                 if (checkRight(i) == -1) {
                     break;
                 } else if (checkRight(i) == 1) {
@@ -97,17 +98,17 @@ public class Bomb extends AnimatedEntity {
                 else cntR++;
             }
             for (int i = 1; i <= cntR; i++) {
-                if (i == Main.FLAMENUM) {
+                if (i == BombermanGame.FLAMENUM) {
                     Entity eR = new Flame((int) (x + Sprite.SCALED_SIZE * i) / Sprite.SCALED_SIZE, (int) y / Sprite.SCALED_SIZE, Sprite.explosion_horizontal_right_last.getFxImage());
-                    Main.flame.add(eR);
+                    BombermanGame.flame.add(eR);
                 } else {
                     Entity eR = new Flame((int) (x + Sprite.SCALED_SIZE * i) / Sprite.SCALED_SIZE, (int) y / Sprite.SCALED_SIZE, Sprite.explosion_horizontal.getFxImage());
-                    Main.flame.add(eR);
+                    BombermanGame.flame.add(eR);
                 }
             }
 
             //flame left count
-            for (int i = 1; i <= Main.FLAMENUM; i++) {
+            for (int i = 1; i <= BombermanGame.FLAMENUM; i++) {
                 if (checkLeft(i) == -1) {
                     break;
                 } else if (checkLeft(i) == 1) {
@@ -117,17 +118,17 @@ public class Bomb extends AnimatedEntity {
                 else cntL++;
             }
             for (int i = 1; i <= cntL; i++) {
-                if (i == Main.FLAMENUM) {
+                if (i == BombermanGame.FLAMENUM) {
                     Entity eL = new Flame((int) (x - Sprite.SCALED_SIZE * i) / Sprite.SCALED_SIZE, (int) y / Sprite.SCALED_SIZE, Sprite.explosion_horizontal_left_last.getFxImage());
-                    Main.flame.add(eL);
+                    BombermanGame.flame.add(eL);
                 } else {
                     Entity eL = new Flame((int) (x - Sprite.SCALED_SIZE * i) / Sprite.SCALED_SIZE, (int) y / Sprite.SCALED_SIZE, Sprite.explosion_horizontal.getFxImage());
-                    Main.flame.add(eL);
+                    BombermanGame.flame.add(eL);
                 }
             }
 
             //flame up count
-            for (int i = 1; i <= Main.FLAMENUM; i++) {
+            for (int i = 1; i <= BombermanGame.FLAMENUM; i++) {
                 if (checkUp(i) == -1) {
                     break;
                 } else if (checkUp(i) == 1) {
@@ -137,17 +138,17 @@ public class Bomb extends AnimatedEntity {
                 else cntU++;
             }
             for (int i = 1; i <= cntU; i++) {
-                if (i == Main.FLAMENUM) {
+                if (i == BombermanGame.FLAMENUM) {
                     Entity eU = new Flame((int) (x) / Sprite.SCALED_SIZE, (int) (y - Sprite.SCALED_SIZE * i) / Sprite.SCALED_SIZE, Sprite.explosion_vertical_top_last.getFxImage());
-                    Main.flame.add(eU);
+                    BombermanGame.flame.add(eU);
                 } else {
                     Entity eU = new Flame((int) (x) / Sprite.SCALED_SIZE, (int) (y - Sprite.SCALED_SIZE * i) / Sprite.SCALED_SIZE, Sprite.explosion_vertical.getFxImage());
-                    Main.flame.add(eU);
+                    BombermanGame.flame.add(eU);
                 }
             }
 
             //flame down count
-            for (int i = 1; i <= Main.FLAMENUM; i++) {
+            for (int i = 1; i <= BombermanGame.FLAMENUM; i++) {
                 if (checkDown(i) == -1) {
                     break;
                 } else if (checkDown(i) == 1) {
@@ -157,19 +158,19 @@ public class Bomb extends AnimatedEntity {
                 else cntD++;
             }
             for (int i = 1; i <= cntD; i++) {
-                if (i == Main.FLAMENUM) {
+                if (i == BombermanGame.FLAMENUM) {
                     Entity eD = new Flame((int) x / Sprite.SCALED_SIZE, (int) (y + Sprite.SCALED_SIZE * i) / Sprite.SCALED_SIZE, Sprite.explosion_vertical_down_last.getFxImage());
-                    Main.flame.add(eD);
+                    BombermanGame.flame.add(eD);
                 } else {
                     Entity eD = new Flame((int) x / Sprite.SCALED_SIZE, (int) (y + Sprite.SCALED_SIZE * i) / Sprite.SCALED_SIZE, Sprite.explosion_vertical.getFxImage());
-                    Main.flame.add(eD);
+                    BombermanGame.flame.add(eD);
                 }
             }
         }
     }
 
     public int checkUp(int i) {
-        for (Entity e : Main.entities) {
+        for (Entity e : BombermanGame.entities) {
             if (e instanceof Wall && collide(e,0,-(Sprite.SCALED_SIZE * i))) return -1;
             else if (e instanceof Brick && collide(e,0,-(Sprite.SCALED_SIZE * i))) return 1;
         }
@@ -177,7 +178,7 @@ public class Bomb extends AnimatedEntity {
     }
 
     public int checkDown(int i) {
-        for (Entity e : Main.entities) {
+        for (Entity e : BombermanGame.entities) {
             if (e instanceof Wall && collide(e,0,Sprite.SCALED_SIZE * i)) return -1;
             else if (e instanceof Brick && collide(e,0,Sprite.SCALED_SIZE * i)) return 1;
         }
@@ -185,7 +186,7 @@ public class Bomb extends AnimatedEntity {
     }
 
     public int checkRight(int i) {
-        for (Entity e : Main.entities) {
+        for (Entity e : BombermanGame.entities) {
             if (e instanceof Wall && collide(e,Sprite.SCALED_SIZE * i,0)) return -1;
             else if (e instanceof Brick && collide(e,Sprite.SCALED_SIZE * i,0)) return 1;
         }
@@ -193,7 +194,7 @@ public class Bomb extends AnimatedEntity {
     }
 
     public int checkLeft(int i) {
-        for (Entity e : Main.entities) {
+        for (Entity e : BombermanGame.entities) {
             if (e instanceof Wall && collide(e,-(Sprite.SCALED_SIZE * i),0)) return -1;
             else if (e instanceof Wall && collide(e,-(Sprite.SCALED_SIZE * i),0)) return 1;
         }
@@ -213,9 +214,9 @@ public class Bomb extends AnimatedEntity {
     }
 
     public static void decreaseBombNumber() {
-        Main.BOMBNUM--;
+        BombermanGame.BOMBNUM--;
     }
     public void increaseBombNumber() {
-        Main.BOMBNUM++;
+        BombermanGame.BOMBNUM++;
     }
 }

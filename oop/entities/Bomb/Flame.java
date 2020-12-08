@@ -2,7 +2,8 @@ package oop.entities.Bomb;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import oop.Audio;
+import oop.audio.Audio;
+import oop.BombermanGame;
 import oop.Main;
 import oop.entities.AnimatedEntity;
 import oop.entities.Brick;
@@ -37,15 +38,15 @@ public class Flame extends AnimatedEntity {
     }
 
     public void check() {
-        for (int i = 0; i < Main.entities.size(); i++) {
-            Entity e = Main.entities.get(i);
-            if (e instanceof Brick && collide(e)) Main.entities.remove(i);
+        for (int i = 0; i < BombermanGame.entities.size(); i++) {
+            Entity e = BombermanGame.entities.get(i);
+            if (e instanceof Brick && collide(e)) BombermanGame.entities.remove(i);
             else if ((e instanceof Balloon && collide(e)) || (e instanceof Oneal && collide(e))) {
                 Audio.botdie();
-                Main.entities.remove(i);
+                BombermanGame.entities.remove(i);
             } else if (e instanceof Bomber && collide(e)) {
                 Audio.bomberdie();
-                Main.entities.get(i).set_alive(false);
+                BombermanGame.entities.get(i).set_alive(false);
             }
         }
     }

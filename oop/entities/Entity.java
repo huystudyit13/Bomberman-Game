@@ -3,7 +3,7 @@ package oop.entities;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import oop.RowCol2D;
+import oop.function.RowCol2D;
 import oop.graphics.Sprite;
 
 public abstract class Entity {
@@ -51,10 +51,10 @@ public abstract class Entity {
 
     public abstract void render(GraphicsContext gc);
 
-    public int getXTile() {
+    public int getCol() {
         return RowCol2D.pixelToTile(x + 1);
     }
-    public int getYTile() {
+    public int getRow() {
         return RowCol2D.pixelToTile(y + 1);
     }
 

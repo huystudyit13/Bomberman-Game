@@ -3,23 +3,24 @@ package oop.entities.Enemy;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import oop.Audio;
+import oop.audio.Audio;
+import oop.BombermanGame;
 import oop.entities.*;
 import oop.entities.Bomb.Bomb;
 import oop.entities.Player.Bomber;
 import oop.graphics.Sprite;
 import oop.Main;
 
+import java.util.Random;
+
 public abstract class Enemy extends AnimatedEntity {
     protected double speed;
     protected final double MAX_STEPS;
-    protected final double rest;
     protected double _steps;
     protected boolean _alive = true;
     protected boolean _moving = false;
 
-
-
+    protected Random random = new Random();
     protected int _direction = -1;
 
     public Enemy(int xUnit, int yUnit, Image img, double _speed) {
@@ -28,7 +29,6 @@ public abstract class Enemy extends AnimatedEntity {
         speed = _speed;
 
         MAX_STEPS = 180;
-        rest = (MAX_STEPS - (int) MAX_STEPS) / MAX_STEPS;
         _steps = MAX_STEPS;
     }
 
@@ -37,7 +37,6 @@ public abstract class Enemy extends AnimatedEntity {
         if(_alive) {
             calculateMove();
         }
-
     }
 
     @Override
@@ -65,7 +64,7 @@ public abstract class Enemy extends AnimatedEntity {
     }
 
     public boolean canMove(double x, double y) {
-        for (Entity e : Main.entities) {
+        for (Entity e : BombermanGame.entities) {
             if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) return false;
             else if (e instanceof Bomber && collide(e,x,y)) {
                 Audio.bomberdie();
@@ -73,7 +72,7 @@ public abstract class Enemy extends AnimatedEntity {
                 return false;
             }
         }
-        for (Entity e : Main.bomb) {
+        for (Entity e : BombermanGame.bomb) {
             if ((e instanceof Bomb && collide(e,x,y))) return false;
         }
         return true;
