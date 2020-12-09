@@ -10,7 +10,7 @@ public class Audio {
     protected static MediaPlayer meidaPlayer;
     protected static final String file = BombermanGame.urlAudio;
     public static void backgr() {
-        String s = file + "16.mp3";
+        String s = file + "backgr.mp3";
         Media media = new Media(Paths.get(s).toUri().toString());
         meidaPlayer = new MediaPlayer(media);
         meidaPlayer.play();
@@ -22,6 +22,7 @@ public class Audio {
         meidaPlayer = new MediaPlayer(media);
         meidaPlayer.play();
     }
+
 
     public static void item() {
         String s = file + "item.wav";

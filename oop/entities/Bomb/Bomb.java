@@ -203,7 +203,7 @@ public class Bomb extends AnimatedEntity {
         for (Entity e : BombermanGame.entities) {
             if (e instanceof Bomber && collide(e,0,0)) {
                 Audio.bomberdie();
-                //e.set_alive(false);
+                e.set_alive(false);
             }
         }
     }

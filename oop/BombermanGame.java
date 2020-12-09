@@ -6,7 +6,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import oop.audio.Audio;
@@ -35,10 +34,10 @@ public class BombermanGame extends Application {
     public static boolean winStage = true;
     public static boolean endGame = false;
     public static int LEVEL = 1;
-    public int stageToWinGame = 2;
+    public static int stageToWinGame = 3;
 
-    public static String urlMap = "D:\\Code big project\\Dic1\\Bommerman\\src\\oop\\res\\levels\\level";
-    public static String urlAudio = "D:\\Code big project\\Dic1\\Bommerman\\src\\oop\\res\\audio\\";
+    public static String urlMap = "E:\\IdeaProjects\\bomberman-game\\src\\oop\\res\\levels\\level";
+    public static String urlAudio = "E:\\IdeaProjects\\bomberman-game\\src\\oop\\res\\audio\\";
 
     public static List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
@@ -64,7 +63,7 @@ public class BombermanGame extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.show();
-        //Audio.backgr();
+        Audio.backgr();
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -73,9 +72,9 @@ public class BombermanGame extends Application {
                     render();
                     update();
                 }
-                if (stageToWinGame < 0) {
-                    gc.setFont(new Font(32));
-                    gc.fillText("END",400,400);
+                if (stageToWinGame == 0) {
+                    gc.setFont(new Font(72));
+                    gc.fillText("END",WIDTH/2 -48,HEIGHT /2);
                     endGame = true;
                 }
 
@@ -90,7 +89,7 @@ public class BombermanGame extends Application {
         return scene;
     }
 
-    public void clearMap() {
+    public static void clearMap() {
         for (int i = 0; i < stillObjects.size(); i++) {
             stillObjects.remove(i);
         }
@@ -105,7 +104,7 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-        System.out.println(stageToWinGame);
+        //System.out.println(stageToWinGame);
         if (winStage) {
             stageToWinGame--;
             clearMap();

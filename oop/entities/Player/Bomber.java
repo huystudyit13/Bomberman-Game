@@ -57,10 +57,8 @@ public class Bomber extends Character {
                 img = _sprite.getFxImage();
                 temp--;
             } else {
-                for (int i = 0; i < BombermanGame.entities.size(); i++) {
-                    Entity e = BombermanGame.entities.get(i);
-                    if(e instanceof Bomber) BombermanGame.entities.remove(i);
-                }
+                BombermanGame.endGame = true;
+                BombermanGame.stageToWinGame = 0;
             }
 
         }
@@ -140,7 +138,7 @@ public class Bomber extends Character {
         for (Entity e : BombermanGame.entities) {
             if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) {
                 return false;
-            } else if((e instanceof Portal) && collide(e,x,y) && !Portal.isClearStage) {
+            } else if((e instanceof Portal) && collide(e,0,0) && !Portal.isClearStage) {
                 if (TileMap.enemynum == 0) {
                     Portal.isClearStage = true;
                     return true;

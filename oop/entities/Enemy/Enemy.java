@@ -65,8 +65,7 @@ public abstract class Enemy extends AnimatedEntity {
     public boolean canMove(double x, double y) {
         for (Entity e : BombermanGame.entities) {
             if ((e instanceof Wall && collide(e,x,y)) || (e instanceof Brick && collide(e,x,y))) return false;
-            else if (e instanceof Bomber && collide(e,x,y)) {
-                BombermanGame.endGame = true;
+            else if (e instanceof Bomber && collide(e,0,0)) {
                 Audio.bomberdie();
                 e.set_alive(false);
                 return false;

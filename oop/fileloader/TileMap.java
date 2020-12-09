@@ -86,7 +86,6 @@ public class TileMap {
                         object = new Doria(col, row, Sprite.kondoria_left1.getFxImage(),1, BombermanGame.getBomber());
                         entities.add(object);
                         break;
-
                     case 9 :
                         object = new SpeedPoweredUp(col, row, Sprite.powerup_speed.getFxImage());
                         item.add(object);
